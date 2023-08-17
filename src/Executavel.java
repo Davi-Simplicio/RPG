@@ -6,16 +6,11 @@ import java.util.Scanner;
 public class Executavel {
     static Scanner sc = new Scanner(System.in);
     public static ArrayList<Jogador> jogadores = new ArrayList<>();
+    public static ArrayList<Classe> unidadesAdversarias = new ArrayList<>();
 
     public static void main(String[] args) {
         cadastraUsuario();
     }
-
-    public static Classes escolhaDeAtaque() {
-
-        return null;
-    }
-
 
     public static void defineTime() {
         for (Jogador jogadorE : jogadores) {
@@ -78,12 +73,33 @@ public class Executavel {
         menu();
     }
 
-    public static void lutar() {
+    public static void modoDeJogo() {
+        int opcao;
+        do {
+
+
+            System.out.println("Você deseja jogar Campanha ou Multiplayer?\n[1]Campanha\n[2]Multiplayer\n[3]Sair");
+            opcao = sc.nextInt();
+            switch (opcao) {
+                case 1:
+                    campanha();
+                    break;
+                case 2:
+                    lutarMultiplayer();
+                    break;
+                case 3:
+                    break;
+            }
+        } while (opcao != 3);
+    }
+
+    public static void lutarMultiplayer() {
         int vez = 1;
         int opcaoMenuLuta = 0;
         Jogador p1 = null;
         Jogador p2 = null;
         Jogador jogadorAtual = null;
+        Jogador jogadorAdversario = null;
         do {
 
             for (Jogador jogadorE : jogadores) {
@@ -96,8 +112,10 @@ public class Executavel {
             if (p1.unidades.size() != 0 || p2.unidades.size() != 0) {
                 if (vez == 1) {
                     jogadorAtual = p1;
+                    jogadorAdversario = p2;
                 } else if (vez == 2) {
                     jogadorAtual = p2;
+                    jogadorAdversario = p1;
                 }
                 System.out.println("""
                         Vez de\040""" + jogadorAtual.nome + "\n" + """
@@ -118,13 +136,13 @@ public class Executavel {
                 }
                 switch (opcaoMenuLuta) {
                     case 1:
-                        atacarMain(jogadorAtual);
+                        atacarMultiplayer(jogadorAtual, jogadorAdversario);
                         break;
                     case 2:
-                        defenderMain(jogadorAtual);
+                        defenderMultiplayer(jogadorAtual);
                         break;
                     case 3:
-                        especial(jogadorAtual);
+                        especial(jogadorAtual, jogadorAdversario);
                         break;
 
                     case 4:
@@ -142,11 +160,9 @@ public class Executavel {
                     if (jogadorAtual == p1) {
                         System.out.println(p2.nome + " Venceu o jogo");
                         vez = 0;
-                        break;
                     } else {
                         System.out.println(p1.nome + " Venceu o jogo");
                         vez = 0;
-                        break;
                     }
                     for (Jogador jogador : jogadores) {
                         jogador.unidades.removeIf(Objects::nonNull);
@@ -214,7 +230,7 @@ public class Executavel {
                     mostrarTime();
                     break;
                 case 3:
-                    lutar();
+                    modoDeJogo();
                     break;
                 case 4:
                     break;
@@ -226,70 +242,43 @@ public class Executavel {
     public static void mostrarTime() {
         for (Jogador jogadorE : jogadores) {
             System.out.println("Time de " + jogadorE.nome + "\n");
-            for (Classes a : jogadorE.unidades) {
+            for (Classe a : jogadorE.unidades) {
                 System.out.println(a + "\n");
             }
         }
     }
 
-    public static void atacarMain(Jogador jogadorE) {
-        System.out.println(jogadorE.nome + " " + """
+    public static void atacarMultiplayer(Jogador jogadorAtual, Jogador jogadorAdversario) {
+        int opcaoParaAtacarEscolhida = 0;
+        System.out.println(jogadorAtual.nome + " " + """
                 Escolha um personagem para atacar o Adversario""");
-        System.out.println(jogadorE.unidades);
+        System.out.println(jogadorAtual.unidades);
         int opcao = sc.nextInt();
-        for (Classes unidadeEscolhida : jogadorE.unidades) {
-            if (jogadorE.unidades.indexOf(unidadeEscolhida) == opcao) {
+        for (Classe unidadeEscolhida : jogadorAtual.unidades) {
+            if (jogadorAtual.unidades.indexOf(unidadeEscolhida) == opcao) {
                 System.out.println("""
-                        Quem você deseja atacar\040""" + jogadorE.nome);
-                if (jogadorE.id == 1) {
-                    for (Jogador jogadorE2 : jogadores) {
-                        if (jogadorE2.id == 2) {
-                            System.out.println(jogadorE2.unidades);
-                        }
-                    }
-                } else if (jogadorE.id == 2) {
-                    for (Jogador jogadorE2 : jogadores) {
-                        if (jogadorE2.id == 1) {
-                            System.out.println(jogadorE2.unidades);
-                        }
-
-                    }
-                }
-                int opcaoAdversariaEscolhida = sc.nextInt();
-                if (jogadorE.id == 1) {
-                    for (Jogador jogadorE2 : jogadores) {
-                        if (jogadorE2.id == 2) {
-                            for (Classes unidadeAdversariaEscolhida : jogadorE2.unidades) {
-                                if (jogadorE2.unidades.indexOf(unidadeAdversariaEscolhida) == opcaoAdversariaEscolhida) {
-                                    String saida = unidadeEscolhida.atacar(unidadeAdversariaEscolhida);
-                                    System.out.println(saida);
-
-                                }
-                            }
-                        }
-                    }
-                } else if (jogadorE.id == 2) {
-                    for (Jogador jogadorE2 : jogadores) {
-                        if (jogadorE2.id == 1) {
-                            for (Classes unidadeAdversariaEscolhida : jogadorE2.unidades) {
-                                if (jogadorE2.unidades.indexOf(unidadeAdversariaEscolhida) == opcaoAdversariaEscolhida) {
-                                    String saida = unidadeEscolhida.atacar(unidadeAdversariaEscolhida);
-                                    System.out.println(saida);
-                                }
-                            }
-                        }
+                        Quem você deseja atacar\040""" + jogadorAtual.nome);
+                System.out.println(jogadorAdversario.unidades);
+                opcaoParaAtacarEscolhida = sc.nextInt();
+                for (Classe unidadeAdversariaEscolhida : jogadorAdversario.unidades) {
+                    if (jogadorAdversario.unidades.indexOf(unidadeAdversariaEscolhida) == opcaoParaAtacarEscolhida) {
+                        System.out.println(jogadorAdversario.unidades.indexOf(unidadeAdversariaEscolhida));
+                        String saida = unidadeEscolhida.atacar(unidadeAdversariaEscolhida);
+                        System.out.println(saida);
                     }
                 }
             }
-            verificaMorte();
+
+
         }
+        verificaMorte();
     }
 
-    static public void defenderMain(Jogador jogadorE) {
+    static public void defenderMultiplayer(Jogador jogadorE) {
         System.out.println("Qual personagem  deseja recuperar a defesa?");
         System.out.println(jogadorE.unidades);
         int opcao = sc.nextInt();
-        for (Classes unidadeEscolhida : jogadorE.unidades) {
+        for (Classe unidadeEscolhida : jogadorE.unidades) {
             if (jogadorE.unidades.indexOf(unidadeEscolhida) == opcao) {
                 unidadeEscolhida.defender();
             }
@@ -300,7 +289,7 @@ public class Executavel {
     public static void verificaMorte() {
         int i = 0;
         for (Jogador jogadorE : jogadores) {
-            for (Classes unidadeEncontrada : jogadorE.unidades) {
+            for (Classe unidadeEncontrada : jogadorE.unidades) {
                 if (unidadeEncontrada.getVida() <= 0) {
                     jogadorE.unidades.remove(unidadeEncontrada);
                     break;
@@ -313,7 +302,7 @@ public class Executavel {
 
     public static void recompilar(Jogador jogadorE) {
         int i = 0;
-        for (Classes unidadeSendoRecompilada : jogadorE.unidades) {
+        for (Classe unidadeSendoRecompilada : jogadorE.unidades) {
             unidadeSendoRecompilada.setId(i);
             i++;
         }
@@ -329,13 +318,13 @@ public class Executavel {
         return false;
     }
 
-    public static void especial(Jogador jogadorAtual) {
+    public static void especial(Jogador jogadorAtual, Jogador jogadorAdversario) {
         String saida;
         System.out.println(jogadorAtual.nome + " " + """
                 Escolha um personagem para usar o especial""");
         System.out.println(jogadorAtual.unidades);
         int opcao = sc.nextInt();
-        for (Classes unidadeEscolhida : jogadorAtual.unidades) {
+        for (Classe unidadeEscolhida : jogadorAtual.unidades) {
             if (jogadorAtual.unidades.indexOf(unidadeEscolhida) == opcao) {
                 if (unidadeEscolhida instanceof Guerreiro || unidadeEscolhida instanceof Ladino) {
                     saida = unidadeEscolhida.especial(unidadeEscolhida);
@@ -346,7 +335,7 @@ public class Executavel {
                             Quem você deseja curar?""");
                     System.out.println(jogadorAtual.unidades);
                     int opcao2 = sc.nextInt();
-                    for (Classes unidadeEscolhidaParaCurar : jogadorAtual.unidades) {
+                    for (Classe unidadeEscolhidaParaCurar : jogadorAtual.unidades) {
                         if (jogadorAtual.unidades.indexOf(unidadeEscolhidaParaCurar) == opcao2) {
                             saida = unidadeEscolhida.especial(unidadeEscolhidaParaCurar);
                             System.out.println(saida);
@@ -357,47 +346,47 @@ public class Executavel {
                 } else if (unidadeEscolhida instanceof Arqueiro) {
                     System.out.println("""
                             Quem você deseja atacar\040""" + jogadorAtual.nome);
-                    if (jogadorAtual.id == 1) {
-                        for (Jogador jogadorE2 : jogadores) {
-                            if (jogadorE2.id == 2) {
-                                System.out.println(jogadorE2.unidades);
-                            }
-                        }
-                    } else if (jogadorAtual.id == 2) {
-                        for (Jogador jogadorE2 : jogadores) {
-                            if (jogadorE2.id == 1) {
-                                System.out.println(jogadorE2.unidades);
-                            }
-
-                        }
-                    }
+                    System.out.println(jogadorAdversario.unidades);
                     int opcaoAdversariaEscolhida = sc.nextInt();
-                    if (jogadorAtual.id == 1) {
-                        for (Jogador jogadorE2 : jogadores) {
-                            if (jogadorE2.id == 2) {
-                                for (Classes unidadeAdversariaEscolhida : jogadorE2.unidades) {
-                                    if (jogadorE2.unidades.indexOf(unidadeAdversariaEscolhida) == opcaoAdversariaEscolhida) {
-                                        saida = unidadeEscolhida.especial(unidadeAdversariaEscolhida);
-                                        System.out.println(saida);
-                                    }
-                                }
-                            }
-                        }
-                    } else if (jogadorAtual.id == 2) {
-                        for (Jogador jogadorE2 : jogadores) {
-                            if (jogadorE2.id == 1) {
-                                for (Classes unidadeAdversariaEscolhida : jogadorE2.unidades) {
-                                    if (jogadorE2.unidades.indexOf(unidadeAdversariaEscolhida) == opcaoAdversariaEscolhida) {
-                                        saida = unidadeEscolhida.especial(unidadeAdversariaEscolhida);
-                                        System.out.println(saida);
-                                    }
-                                }
-                            }
+
+                    for (Classe unidadeAdversariaEscolhida : jogadorAdversario.unidades) {
+                        if (jogadorAdversario.unidades.indexOf(unidadeAdversariaEscolhida) == opcaoAdversariaEscolhida) {
+                            saida = unidadeEscolhida.especial(unidadeAdversariaEscolhida);
+                            System.out.println(saida);
                         }
                     }
+
                 }
                 verificaMorte();
             }
         }
+
+    }
+
+    public static void campanha() {
+        System.out.println("defina seu nome");
+        String nome = sc.next();
+        Jogador p1 = new Jogador(1, nome, 0);
+        System.out.println(Historia.parte1());
+        Guerreiro guerreiro = new Guerreiro("Kael", 100, 10, 0, 2, 2, 20, 1);
+        p1.unidades.add(guerreiro);
+        Ladino ladino = new Ladino("Selene", 100, 30, 0, 5, 5, 20, 2);
+        p1.unidades.add(ladino);
+        Arqueiro arqueiro = new Arqueiro("Lyra", 100, 25, 0, 5, 5, 30, 3);
+        p1.unidades.add(arqueiro);
+        Mago mago = new Mago("Arin", 100, 20, 0, 10, 2, 25, 4);
+        p1.unidades.add(mago);
+        System.out.println("Determinados a enfrentar os inimigos, eles entram na batalha");
+        nivel1();
+    }
+
+    public static ArrayList<Classe> nivel1() {
+        Orc orcComum = new Orc("Orc Comum", 50, 10, 0, 2, 2, 0, 0);
+        Orc orcDaFloresta = new Orc("Orc da Floresta", 100, 20, 0, 5, 5, 30, 0);
+        unidadesAdversarias.clear();
+        unidadesAdversarias.add(orcComum);
+        unidadesAdversarias.add(orcComum);
+        unidadesAdversarias.add(orcDaFloresta);
+        return unidadesAdversarias;
     }
 }
