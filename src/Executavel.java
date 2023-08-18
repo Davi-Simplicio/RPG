@@ -395,17 +395,17 @@ public class Executavel {
 
                 nivel1();
                 System.out.println(Historia.parte1());
-                menuCampanha(p1);
             } else if (contador == 2) {
                 nivel2();
                 System.out.println(Historia.parte2());
-                menuCampanha(p1);
             } else if (contador == 3) {
                 nivel3();
                 System.out.println(Historia.parte3());
-                menuCampanha(p1);
             } else if (contador == 4) {
                 System.out.println("Parabens você ganhou");
+            }
+            if (contador<5){
+                menuDeBatalhaCampanha(p1);
             }
         } while (contador < 5);
 
@@ -450,7 +450,7 @@ public class Executavel {
 
     }
 
-    public static void menuCampanha(Jogador p1) {
+    public static void menuDeBatalhaCampanha(Jogador p1) {
         String especialString = " ̷[̷3̷]̷E̷s̷p̷e̷c̷i̷a̷l̷";
         int opcao = 0;
         int contador = 2;
@@ -493,7 +493,7 @@ public class Executavel {
             } while (opcao < 0 || opcao > contador);
             p1.especial++;
         } while (unidadesAdversarias.size() != 0 || p1.getUnidades().size() != 0);
-        recompensa();
+        p1.recompensa();
     }
 
     public static void ataqueAdversarioCampanha(Jogador p1) {
@@ -514,10 +514,10 @@ public class Executavel {
                 }
             }
         }
-
     }
-
-    public static Item recompensa() {
-
+    public static void menuInicialCampanha(){
+        System.out.println("""
+                [1]Ver personagens
+                [2]Continuar Historia""");
     }
 }

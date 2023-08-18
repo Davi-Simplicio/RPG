@@ -1,5 +1,23 @@
+import java.util.ArrayList;
+
 public class Runa extends Item{
-    public Runa(String raridade, String nome) {
-        super(raridade, nome);
+    static ArrayList<Item>runas = new ArrayList<>();
+    public Runa(String raridade, String nome,double chanceDeObter,double valorBuff) {
+        super(raridade, nome,chanceDeObter,valorBuff);
+        defineRunas();
+    }
+
+        private static void defineRunas(){
+        Runa runaDaforca = new Runa("Comum","Runa da Força",5,20);
+        Runa runaPura = new Runa("incomum","Runa da Força",25,35);
+        Runa runaDoMinotauro = new Runa("Raro","Runa do Minotauro",15,60);
+        Runa runaDoRei = new Runa("Épico","Runa do Rei",7,75);
+        Runa runaDeAres = new Runa("Lendário","Runa de Ares",3,110);
+
+        runas.add(runaDaforca);
+        runas.add(runaPura);
+        runas.add(runaDoMinotauro);
+        runas.add(runaDoRei);
+        runas.add(runaDeAres);
     }
 }
