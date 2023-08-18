@@ -1,52 +1,31 @@
-public class Guerreiro extends Classes {
+public class Guerreiro extends Classe {
     public Guerreiro(String nome,int vida,int dano, int defesa, int chaceCritico,
-                     int chanceEsquivar, int especial, int id) {
-        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id);
+                     int chanceEsquivar, int especial, int id,String item) {
+        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id,item);
     }
 
-    @Override
-    public String atacar(Classes unidadeAdversariaEscolhida) {
-        int numeroAleatorio = sc.nextInt(100);
-        if(numeroAleatorio > this.getChanceEsquivar()){
-            if(numeroAleatorio > this.getChaceCritico()){
-                if(unidadeAdversariaEscolhida.getDefesa()<=0){
-                    unidadeAdversariaEscolhida.setVida(unidadeAdversariaEscolhida.getVida() - this.getDano());
-                    arrumarDefesa();
-                    return this.getNome()+" infringiu "+this.getDano()+" de dano em "+unidadeAdversariaEscolhida.getNome()+
-                            " que agora está com "+unidadeAdversariaEscolhida.getVida()+" de vida";
-                }else{
-                    unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano());
-                    arrumarDefesa();
-                    return (this.getNome()+" infringiu "+this.getDano()+" de dano em "+unidadeAdversariaEscolhida.getNome()+
-                            " que agora está com "+unidadeAdversariaEscolhida.getDefesa()+" de defesa");
-                }
-            }else{
-                if(unidadeAdversariaEscolhida.getDefesa()<=0){
-                    unidadeAdversariaEscolhida.setVida(unidadeAdversariaEscolhida.getVida() - this.getDano()*2);
-                    arrumarDefesa();
-                    return ("Ataque Crítico! "+this.getNome()+" infringiu "+this.getDano()*2+" de dano em "+unidadeAdversariaEscolhida.getNome()+
-                            " que agora está com "+unidadeAdversariaEscolhida.getVida()+" de vida");
-                }else{
-                    unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano()*2);
-                    arrumarDefesa();
-                    return ("Ataque Crítico! "+this.getNome()+" infringiu "+this.getDano()*2+" de dano em "+unidadeAdversariaEscolhida.getNome()+
-                            " que agora está com "+unidadeAdversariaEscolhida.getDefesa()+" de defesa");
-                }
-            }
-        }else{
-            return (unidadeAdversariaEscolhida.getNome() + " desviou do ataque");
-        }
-    }
-    public String especial(Classes unidadeEscolhida){
+
+    public String especial(Classe unidadeEscolhida){
         this.setDano(this.getDano()+10);
         this.setChaceCritico(this.getChaceCritico()+100);
         return "Sua chance de ataque critico aumentou em 100% e seu dano foi aumentado para 20";
     }
 
+    @Override
+    public String defender() {
+        {
+            if (this.getDefesa()>=100){
+                return "Você já está com a defesa máxima";
+            }else{
+                this.setDefesa(this.getDefesa()+50);;
+                return "Você aumentou 25 de escudo";
+            }
 
+        }
+    }
 
     @Override
     public String toString() {
-        return  "\n"+"Guerreiro " + super.toString();
+        return  "\n"+this.getNome()+" " + super.toString();
     }
 }

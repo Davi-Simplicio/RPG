@@ -4,17 +4,15 @@ public class Jogador {
     String nome;
     int id;
     int especial;
-    public ArrayList<Classes> unidades = new ArrayList<>();
+    public ArrayList<Classe> unidades = new ArrayList<>();
 
     public Jogador(int id, String nome, int especial) {
         this.nome = nome;
         this.id = id;
-        this.especial =especial;
+        this.especial = especial;
 
     }
-
-
-    public ArrayList<Classes> getUnidades() {
+    public ArrayList<Classe> getUnidades() {
         return unidades;
     }
 
