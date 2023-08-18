@@ -14,7 +14,7 @@ public abstract class Classe {
     private int especial;
 
     public Classe(String nome, int vida, int dano, int defesa, int chaceCritico,
-                  int chanceEsquivar, int especial, int id) {
+                  int chanceEsquivar, int especial, int id, String item) {
         this.nome = nome;
         this.vida = vida;
         this.dano = dano;
@@ -75,33 +75,32 @@ public abstract class Classe {
     }
 
     public String atacar(Classe unidadeAdversariaEscolhida) {
-
+        int dobradorDeDano = 1;
+        String falaExtra = "Ataque normal!";
         int numeroAleatorio = sc.nextInt(100);
         if (numeroAleatorio > this.getChanceEsquivar()) {
-            if (numeroAleatorio > this.getChaceCritico()) {
-                if (unidadeAdversariaEscolhida.getDefesa() <= 0) {
-                    unidadeAdversariaEscolhida.setVida(unidadeAdversariaEscolhida.getVida() - this.getDano());
-                    arrumarDefesa();
-                    return this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
-                            " que agora está com " + unidadeAdversariaEscolhida.getVida() + " de vida";
-                } else {
-                    unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano());
-                    arrumarDefesa();
-                    return (this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
-                            " que agora está com " + unidadeAdversariaEscolhida.getDefesa() + " de defesa");
+            if (numeroAleatorio < this.getChaceCritico()) {
+                dobradorDeDano = 2;
+                falaExtra = "Ataque Critico!";
+            }
+            if (unidadeAdversariaEscolhida.getDefesa() <= 0) {
+
+                unidadeAdversariaEscolhida.setVida(unidadeAdversariaEscolhida.getVida() - this.getDano() * dobradorDeDano);
+                arrumarDefesa();
+                if (unidadeAdversariaEscolhida.getVida() < 0) {
+                    unidadeAdversariaEscolhida.setVida(0);
                 }
+                return falaExtra +" "+ this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
+                        " que agora está com " + unidadeAdversariaEscolhida.getVida() + " de vida";
             } else {
-                if (unidadeAdversariaEscolhida.getDefesa() <= 0) {
-                    unidadeAdversariaEscolhida.setVida(unidadeAdversariaEscolhida.getVida() - this.getDano() * 2);
-                    arrumarDefesa();
-                    return ("Ataque Crítico! " + this.getNome() + " infringiu " + this.getDano() * 2 + " de dano em " + unidadeAdversariaEscolhida.getNome() +
-                            " que agora está com " + unidadeAdversariaEscolhida.getVida() + " de vida");
-                } else {
-                    unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano() * 2);
-                    arrumarDefesa();
-                    return ("Ataque Crítico! " + this.getNome() + " infringiu " + this.getDano() * 2 + " de dano em " + unidadeAdversariaEscolhida.getNome() +
-                            " que agora está com " + unidadeAdversariaEscolhida.getDefesa() + " de defesa");
+                unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano());
+                arrumarDefesa();
+                if (unidadeAdversariaEscolhida.getDefesa() < 0) {
+                    unidadeAdversariaEscolhida.setDefesa(0);
                 }
+                return (falaExtra +" "+ this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
+                        " que agora está com " + unidadeAdversariaEscolhida.getDefesa() + " de defesa");
+
             }
         } else {
             return (unidadeAdversariaEscolhida.getNome() + " desviou do ataque");

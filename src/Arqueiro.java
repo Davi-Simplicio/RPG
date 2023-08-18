@@ -5,8 +5,8 @@ public class Arqueiro extends Classe{
     Random sc = new Random();
 
     public Arqueiro(String nome,int vida,int dano, int defesa, int chaceCritico,
-                    int chanceEsquivar, int especial, int id) {
-        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id);
+                    int chanceEsquivar, int especial, int id,String item) {
+        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id,item);
 
     }
 
@@ -46,6 +46,6 @@ public class Arqueiro extends Classe{
 
     @Override
     public String toString() {
-        return "\n"+"Arqueiro " + super.toString();
+        return "\n"+this.getNome()+" " + super.toString();
     }
 }

@@ -1,7 +1,7 @@
 public class Guerreiro extends Classe {
     public Guerreiro(String nome,int vida,int dano, int defesa, int chaceCritico,
-                     int chanceEsquivar, int especial, int id) {
-        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id);
+                     int chanceEsquivar, int especial, int id,String item) {
+        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id,item);
     }
 
 
@@ -26,6 +26,6 @@ public class Guerreiro extends Classe {
 
     @Override
     public String toString() {
-        return  "\n"+"Guerreiro " + super.toString();
+        return  "\n"+this.getNome()+" " + super.toString();
     }
 }
