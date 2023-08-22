@@ -67,6 +67,7 @@ public class Jogador {
                 }
             }
         }
+        return "";
     }
 
     public String escolhaDeRaridade(int numeroRandom,Item item){

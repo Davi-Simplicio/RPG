@@ -379,6 +379,7 @@ public class Executavel {
         System.out.println("defina seu nome");
         String nome = sc.next();
         Jogador p1 = new Jogador(1, nome, 0);
+        jogadores.add(p1);
         Guerreiro guerreiro = new Guerreiro("Jay", 100, 10, 0, 2, 2, 20, 0, "Nenhum");
         p1.unidades.add(guerreiro);
         Ladino ladino = new Ladino("Pedro", 100, 30, 0, 5, 5, 20, 1, "Nenhum");
@@ -390,9 +391,9 @@ public class Executavel {
         System.out.println("Determinados a enfrentar os inimigos, eles entram na batalha");
         do {
             unidadesAdversarias.clear();
+            menuInicialCampanha(p1);
             contador++;
             if (contador == 1) {
-
                 nivel1();
                 System.out.println(Historia.parte1());
             } else if (contador == 2) {
@@ -403,9 +404,6 @@ public class Executavel {
                 System.out.println(Historia.parte3());
             } else if (contador == 4) {
                 System.out.println("Parabens você ganhou");
-            }
-            if (contador<5){
-                menuDeBatalhaCampanha(p1);
             }
         } while (contador < 5);
 
@@ -451,7 +449,7 @@ public class Executavel {
     }
 
     public static void menuDeBatalhaCampanha(Jogador p1) {
-        String especialString = " ̷[̷3̷]̷E̷s̷p̷e̷c̷i̷a̷l̷";
+        String especialString = " [̷3̷]̷E̷s̷p̷e̷c̷i̷a̷l̷";
         int opcao = 0;
         int contador = 2;
 
@@ -460,38 +458,34 @@ public class Executavel {
             contador = 3;
         }
         do {
+            System.out.println("""
+                    O que você deseja fazer?
+                    [1]Atacar
+                    [2]Defender
+                    """ + especialString);
+            if (opcao < 0 || opcao > contador) {
+                break;
+            }
 
-
-            do {
-                System.out.println("""
-                        O que você deseja fazer?
-                        [1]Atacar
-                        [2]Defender
-                        """ + especialString);
-                if (opcao < 0 || opcao > contador) {
+            opcao = sc.nextInt();
+            switch (opcao) {
+                case 1:
+                    atacar(p1, unidadesAdversarias);
                     break;
-                }
-
-                opcao = sc.nextInt();
-                switch (opcao) {
-                    case 1:
-                        atacar(p1, unidadesAdversarias);
-                        break;
-                    case 2:
-                        defender(p1);
-                        break;
-                    case 3:
-                        if (p1.especial >= 3) {
-                            especial(p1, unidadesAdversarias);
-                            contador = 0;
-                        } else {
-                            System.out.println("Especial não carregado");
-                        }
-                        break;
-                }
-                ataqueAdversarioCampanha(p1);
-            } while (opcao < 0 || opcao > contador);
+                case 2:
+                    defender(p1);
+                    break;
+                case 3:
+                    if (p1.especial >= 3) {
+                        especial(p1, unidadesAdversarias);
+                        contador = 0;
+                    } else {
+                        System.out.println("Especial não carregado");
+                    }
+                    break;
+            }
             p1.especial++;
+            ataqueAdversarioCampanha(p1);
         } while (unidadesAdversarias.size() != 0 || p1.getUnidades().size() != 0);
         p1.recompensa();
     }
@@ -515,9 +509,37 @@ public class Executavel {
             }
         }
     }
-    public static void menuInicialCampanha(){
-        System.out.println("""
-                [1]Ver personagens
-                [2]Continuar Historia""");
+
+    public static void menuInicialCampanha(Jogador jogador) {
+        int opcao = 0;
+        do {
+
+
+            System.out.println("""
+                    [1]Ver personagens
+                    [2]Ver Inventario
+                    [3]Continuar Historia""");
+            opcao = sc.nextInt();
+            switch (opcao) {
+                case 1:
+                    mostrarTime();
+                    break;
+                case 2:
+                    verInventario(jogador);
+                    break;
+                case 3:
+                    menuDeBatalhaCampanha(jogador);
+                    break;
+            }
+        }while(opcao!=3);
+    }
+
+    private static void verInventario(Jogador jogador) {
+        for (Item item : jogador.inventario) {
+            System.out.println(item);
+        }
+        if (jogador.inventario.size()==0){
+            System.out.println("Você não possui itens");
+        }
     }
 }
