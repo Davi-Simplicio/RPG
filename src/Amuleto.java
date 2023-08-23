@@ -4,9 +4,8 @@ public class Amuleto extends Item{
     static ArrayList<Amuleto> amuletos = new ArrayList<>();
     public Amuleto(String raridade, String nome,double chanceDeObter,double valorBuff) {
         super(raridade, nome,chanceDeObter,valorBuff);
-        devineAmuletos();
     }
-    private static void devineAmuletos(){
+    public static void defineAmuletos(){
         Amuleto amuletoDeBronze = new Amuleto("Comum","Amuleto de Bronze",50,25);
         Amuleto amuletoDePrata = new Amuleto("Incomum","Amuleto de Prata",25,50);
         Amuleto amuletoDeOuro = new Amuleto("Rara","Amuleto de Ouro",15,75);
@@ -17,5 +16,10 @@ public class Amuleto extends Item{
         amuletos.add(amuletoDeOuro);
         amuletos.add(amuletoDosMonges);
         amuletos.add(amuletoDivino);
+    }
+
+    @Override
+    public String toString() {
+        return "Amuleto{} " + super.toString();
     }
 }

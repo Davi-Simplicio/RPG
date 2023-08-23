@@ -4,10 +4,10 @@ public class Pergaminho extends Item{
     static ArrayList<Item>pergaminhos = new ArrayList<>();
     public Pergaminho(String raridade, String nome,double chanceDeObter,double valorBuff) {
         super(raridade, nome,chanceDeObter,valorBuff);
-        definePergaminhos();
+       ;
     }
 
-    private static void definePergaminhos(){
+    public static void definePergaminhos(){
         Pergaminho pergaminhoVelho = new Pergaminho("Comum","Pergaminho Velho",50,5);
         Pergaminho pergaminhoDaVerdade = new Pergaminho("Incomum","Pergaminho da Verdade",25,10);
         Pergaminho pergaminhoDoEspirito = new Pergaminho("Raro","Pergaminho do Espirito",15,20);
@@ -21,4 +21,8 @@ public class Pergaminho extends Item{
         pergaminhos.add(pergaminhoDaFlorestaNegra);
     }
 
+    @Override
+    public String toString() {
+        return "Pergaminho{} " + super.toString();
+    }
 }

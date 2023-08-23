@@ -12,6 +12,11 @@ public class Executavel {
     public static ArrayList<Classe> unidadesAdversarias = new ArrayList<>();
 
     public static void main(String[] args) {
+        Amuleto.defineAmuletos();
+        Armadura.defineArmaduras();
+        Bota.defineBotas();
+        Pergaminho.definePergaminhos();
+        Runa.defineRunas();
         modoDeJogo();
     }
 
@@ -30,22 +35,22 @@ public class Executavel {
                     int id = jogadorE.getUnidades().toArray().length;
                     switch (opcao) {
                         case 1:
-                            Arqueiro arqueiro = new Arqueiro("Arqueiro", 100, 30, 25, 5, 10, 90, id, "Nenhum");
+                            Arqueiro arqueiro = new Arqueiro("Arqueiro", 100, 30, 25, 5, 10, 90, id, null);
                             jogadorE.unidades.add(arqueiro);
                             i++;
                             break;
                         case 2:
-                            Guerreiro guerreiro = new Guerreiro("Guerreiro", 100, 10, 50, 2, 1, 100, id, "Nenhum");
+                            Guerreiro guerreiro = new Guerreiro("Guerreiro", 100, 10, 50, 2, 1, 100, id, null);
                             jogadorE.unidades.add(guerreiro);
                             i++;
                             break;
                         case 3:
-                            Ladino ladino = new Ladino("Ladino", 100, 50, 0, 8, 10, 90, id, "Nenhum");
+                            Ladino ladino = new Ladino("Ladino", 100, 50, 0, 8, 10, 90, id, null);
                             jogadorE.unidades.add(ladino);
                             i++;
                             break;
                         case 4:
-                            Mago mago = new Mago("Mago", 100, 30, 25, 0, 20, 50, id, "Nenhum");
+                            Mago mago = new Mago("Mago", 100, 30, 25, 0, 20, 50, id, null);
                             jogadorE.unidades.add(mago);
                             i++;
                             break;
@@ -130,8 +135,8 @@ public class Executavel {
                         [5]Desistir""");
                 opcaoMenuLuta = sc.nextInt();
                 if (opcaoMenuLuta == 3) {
-                    if (jogadorAtual.especial >= 3) {
-                        jogadorAtual.especial = 0;
+                    if (jogadorAtual.getEspecial() >= 3) {
+                        jogadorAtual.setEspecial(0);
                     } else {
                         System.out.println("Especial não carregado");
                         opcaoMenuLuta = 6;
@@ -173,10 +178,10 @@ public class Executavel {
                 }
                 if (vez == 1) {
                     vez = 2;
-                    p1.especial++;
+                    p1.setEspecial(p1.getEspecial()+1);
                 } else if (vez == 2) {
                     vez = 1;
-                    p2.especial++;
+                    p2.setEspecial(p2.getEspecial()+1);
                 }
             } else {
                 System.out.println("Defina um time antes de lutar");
@@ -375,98 +380,69 @@ public class Executavel {
     }
 
     public static void campanha() {
-        int contador = 0;
         System.out.println("defina seu nome");
         String nome = sc.next();
         Jogador p1 = new Jogador(1, nome, 0);
         jogadores.add(p1);
-        Guerreiro guerreiro = new Guerreiro("Jay", 100, 10, 0, 2, 2, 20, 0, "Nenhum");
+        Guerreiro guerreiro = new Guerreiro("Jay", 100, 10, 0, 2, 2, 20, 0, null);
         p1.unidades.add(guerreiro);
-        Ladino ladino = new Ladino("Pedro", 100, 30, 0, 5, 5, 20, 1, "Nenhum");
+        Ladino ladino = new Ladino("Pedro", 100, 30, 0, 5, 5, 20, 1, null);
         p1.unidades.add(ladino);
-        Arqueiro arqueiro = new Arqueiro("Cleo", 100, 25, 0, 5, 5, 30, 2, "Nenhum");
+        Arqueiro arqueiro = new Arqueiro("Cleo", 100, 25, 0, 5, 5, 30, 2, null);
         p1.unidades.add(arqueiro);
-        Mago mago = new Mago("Isa", 100, 20, 0, 10, 2, 25, 3, "Nenhum");
+        Mago mago = new Mago("Isa", 100, 20, 0, 10, 2, 25, 3, null);
         p1.unidades.add(mago);
-        System.out.println("Determinados a enfrentar os inimigos, eles entram na batalha");
-        do {
-            unidadesAdversarias.clear();
-            menuInicialCampanha(p1);
-            contador++;
-            if (contador == 1) {
-                nivel1();
-                System.out.println(Historia.parte1());
-            } else if (contador == 2) {
-                nivel2();
-                System.out.println(Historia.parte2());
-            } else if (contador == 3) {
-                nivel3();
-                System.out.println(Historia.parte3());
-            } else if (contador == 4) {
-                System.out.println("Parabens você ganhou");
-            }
-        } while (contador < 5);
-
+        menuInicialCampanha(p1);
 
     }
 
-    public static void nivel1() {
-        Orc orcComum = null;
-        Orc orcDaFloresta = null;
+    public static void defineNivel(Jogador jogador, int contador) {
         unidadesAdversarias.clear();
-        for (int i = 0; i <= 2; i++) {
-            if (i == 2) {
-                orcDaFloresta = new Orc("Orc da Floresta", 100, 20, 0, 5, 5, 30, i, "Nenhum");
-                unidadesAdversarias.add(orcDaFloresta);
-            } else {
-                orcComum = new Orc("Orc Comum", 50, 10, 0, 2, 2, 0, i, "Nenhum");
-                unidadesAdversarias.add(orcComum);
-            }
+
+        contador++;
+        if (contador == 1) {
+            unidadesAdversarias.addAll(Nivel.nivel1());
+            System.out.println(Historia.parte1());
+
+        }else  if (contador == 2) {
+            unidadesAdversarias.addAll(Nivel.nivel2());
+        } else  if (contador == 3) {
+            unidadesAdversarias.addAll(Nivel.nivel3());
+        }else  if (contador == 4) {
+            unidadesAdversarias.addAll(Nivel.nivel4());
         }
-    }
-
-    public static void nivel2() {
-        Esqueleto esqueletoComum = null;
-        Orc orcComum = null;
-        Orc orcDasMontanhas = null;
-
-        for (int i = 0; i <= 5; i++) {
-            if (i == 5) {
-                orcDasMontanhas = new Orc("Orc das Montanhas", 150, 50, 0, 10, 0, 0, i, "Nenhum");
-                unidadesAdversarias.add(orcDasMontanhas);
-            } else if (i == 1 || i == 2) {
-                orcComum = new Orc("Orc Comum", 50, 10, 0, 2, 2, 0, i, "Nenhum");
-                unidadesAdversarias.add(orcComum);
-            } else {
-                esqueletoComum = new Esqueleto("Esqueleto Comum", 50, 30, 0, 20, 20, 0, i, "Nenhum");
-                unidadesAdversarias.add(esqueletoComum);
-            }
+        else if (contador == 5) {
+            unidadesAdversarias.addAll(Nivel.nivel5());
+            System.out.println(Historia.parte2());
+        } else if (contador == 10) {
+            unidadesAdversarias.addAll(Nivel.nivel10());
+            System.out.println(Historia.parte3());
+        } else if (contador == 11) {
+            System.out.println("Parabens você ganhou");
+            jogador.unidades.clear();
         }
-    }
-
-    public static void nivel3() {
+        menuDeBatalhaCampanha(jogador);
 
     }
 
     public static void menuDeBatalhaCampanha(Jogador p1) {
+        p1.setEspecial(0);
         String especialString = " [̷3̷]̷E̷s̷p̷e̷c̷i̷a̷l̷";
         int opcao = 0;
         int contador = 2;
-
-        if (p1.especial >= 3) {
-            especialString = ("[3]Especial");
-            contador = 3;
-        }
         do {
+            if (p1.getEspecial() >= 3) {
+                especialString = ("[3]Especial");
+                contador = 3;
+            }
+            if (unidadesAdversarias.size() == 0 || p1.getUnidades().size() == 0) {
+                break;
+            }
             System.out.println("""
                     O que você deseja fazer?
                     [1]Atacar
                     [2]Defender
                     """ + especialString);
-            if (opcao < 0 || opcao > contador) {
-                break;
-            }
-
             opcao = sc.nextInt();
             switch (opcao) {
                 case 1:
@@ -476,18 +452,18 @@ public class Executavel {
                     defender(p1);
                     break;
                 case 3:
-                    if (p1.especial >= 3) {
+                    if (p1.getEspecial() >= 3) {
                         especial(p1, unidadesAdversarias);
-                        contador = 0;
+                        contador = 2;
                     } else {
                         System.out.println("Especial não carregado");
                     }
                     break;
             }
-            p1.especial++;
+            p1.setEspecial(p1.getEspecial()+1);
             ataqueAdversarioCampanha(p1);
         } while (unidadesAdversarias.size() != 0 || p1.getUnidades().size() != 0);
-        p1.recompensa();
+        System.out.println(p1.recompensa());
     }
 
     public static void ataqueAdversarioCampanha(Jogador p1) {
@@ -512,34 +488,78 @@ public class Executavel {
 
     public static void menuInicialCampanha(Jogador jogador) {
         int opcao = 0;
+        int contador = 0;
         do {
-
-
+            for (Classe unidade : jogador.getUnidades()) {
+                if (unidade.getVida() < 100) {
+                    unidade.setVida(100);
+                    unidade.defineBuff();
+                }
+            }
             System.out.println("""
                     [1]Ver personagens
                     [2]Ver Inventario
-                    [3]Continuar Historia""");
+                    [3]Continuar Historia
+                    [4]Sair""");
             opcao = sc.nextInt();
             switch (opcao) {
                 case 1:
                     mostrarTime();
                     break;
                 case 2:
-                    verInventario(jogador);
+                    if (jogador.inventario.size() == 0) {
+                        System.out.println("Você não possui itens");
+                    } else {
+                        verInventario(jogador);
+                    }
                     break;
                 case 3:
-                    menuDeBatalhaCampanha(jogador);
+                    defineNivel(jogador, contador);
+                    contador++;
+                    break;
+                case 4:
                     break;
             }
-        }while(opcao!=3);
+        } while (opcao != 4 || jogador.getUnidades().size() != 0);
     }
 
     private static void verInventario(Jogador jogador) {
+
         for (Item item : jogador.inventario) {
-            System.out.println(item);
+            for (int i = 0; i < jogador.inventario.size(); i++) {
+                System.out.println(i+" "+item);
+            }
+
         }
-        if (jogador.inventario.size()==0){
-            System.out.println("Você não possui itens");
+
+        System.out.println("""
+                Deseja usar algum item em suas unidades?
+                [1]Sim
+                [2]Não""");
+        int opcao = sc.nextInt();
+        switch (opcao) {
+            case 1:
+                decideItem(jogador);
+                break;
+            case 2:
+                break;
         }
+
+    }
+
+    public static void decideItem(Jogador jogador) {
+        System.out.println("""
+                Escolha um item
+                    """);
+        int escolhaDeItem = sc.nextInt();
+        Item item = jogador.inventario.get(escolhaDeItem);
+        System.out.println("""
+                Em qual unidade deseja usar este item?""");
+        mostrarTime();
+        int escolhaDeUnidade = sc.nextInt();
+        Classe unidadeEscolhida = jogador.getUnidades().get(escolhaDeUnidade);
+        unidadeEscolhida.setItem(item);
+        jogador.inventario.remove(item);
+        unidadeEscolhida.defineBuff();
     }
 }

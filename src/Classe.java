@@ -12,9 +12,10 @@ public abstract class Classe {
     private int chanceEsquivar;
     private int id;
     private int especial;
+    private Item item;
 
     public Classe(String nome, int vida, int dano, int defesa, int chaceCritico,
-                  int chanceEsquivar, int especial, int id, String item) {
+                  int chanceEsquivar, int especial, int id, Item item) {
         this.nome = nome;
         this.vida = vida;
         this.dano = dano;
@@ -23,6 +24,7 @@ public abstract class Classe {
         this.chanceEsquivar = chanceEsquivar;
         this.especial = especial;
         this.id = id;
+        this.item = item;
 
     }
 
@@ -74,6 +76,14 @@ public abstract class Classe {
         this.id = id;
     }
 
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
     public String atacar(Classe unidadeAdversariaEscolhida) {
         int dobradorDeDano = 1;
         String falaExtra = "Ataque normal!";
@@ -122,6 +132,10 @@ public abstract class Classe {
 
     @Override
     public String toString() {
+        String nomeDoItem = "Nenhum";
+        if (item!=null){
+             nomeDoItem = item.nome;
+        }
         return "[" + id + "]" +
                 "vida=" + vida +
                 ", dano=" + dano +
@@ -129,6 +143,7 @@ public abstract class Classe {
                 ", chaceCritico=" + chaceCritico +
                 ", chanceEsquivar=" + chanceEsquivar +
                 ", especial=" + especial +
+                ", Item= "+nomeDoItem+
                 '}';
     }
 
@@ -138,6 +153,23 @@ public abstract class Classe {
                 if (unidade.getDefesa() < 0) {
                     unidade.setDefesa(0);
                 }
+            }
+        }
+
+    }
+    public void defineBuff(){
+        Item item = this.getItem();
+        if (item!=null){
+            if (item instanceof Amuleto){
+                this.setVida((int) (this.getVida()+item.getValorBuff()));
+            }else if(item instanceof Armadura){
+                this.setDefesa((int) (this.getDefesa()+item.getValorBuff()));
+            }else if(item instanceof Bota){
+                this.setChanceEsquivar((int) (this.getChanceEsquivar()+item.valorBuff));
+            }else if(item instanceof Runa){
+                this.setChaceCritico((int) (this.getChaceCritico()+item.getValorBuff()));
+            }else{
+                this.setDano((int) (this.getDano()+item.valorBuff));
             }
         }
 

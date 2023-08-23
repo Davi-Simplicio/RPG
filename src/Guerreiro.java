@@ -1,6 +1,6 @@
 public class Guerreiro extends Classe {
     public Guerreiro(String nome,int vida,int dano, int defesa, int chaceCritico,
-                     int chanceEsquivar, int especial, int id,String item) {
+                     int chanceEsquivar, int especial, int id,Item item) {
         super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id,item);
     }
 

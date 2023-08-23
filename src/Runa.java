@@ -4,11 +4,11 @@ public class Runa extends Item{
     static ArrayList<Item>runas = new ArrayList<>();
     public Runa(String raridade, String nome,double chanceDeObter,double valorBuff) {
         super(raridade, nome,chanceDeObter,valorBuff);
-        defineRunas();
+
     }
 
-        private static void defineRunas(){
-        Runa runaDaforca = new Runa("Comum","Runa da Força",5,20);
+        public static void defineRunas(){
+        Runa runaDaforca = new Runa("Comum","Runa da Força",50,20);
         Runa runaPura = new Runa("incomum","Runa da Força",25,35);
         Runa runaDoMinotauro = new Runa("Raro","Runa do Minotauro",15,60);
         Runa runaDoRei = new Runa("Épico","Runa do Rei",7,75);
@@ -19,5 +19,10 @@ public class Runa extends Item{
         runas.add(runaDoMinotauro);
         runas.add(runaDoRei);
         runas.add(runaDeAres);
+    }
+
+    @Override
+    public String toString() {
+        return "Runa{} " + super.toString();
     }
 }

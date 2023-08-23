@@ -84,11 +84,9 @@ public abstract class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "nome='" + nome + '\'' +
-                "raridade='" + raridade + '\'' +
-                "chanceDeObter=" + chanceDeObter +
-                "valorBuff=" + valorBuff +
-                '}';
+        return nome + '\'' +
+               raridade + '\'' +
+                " chanceDeObter=" + chanceDeObter +
+                " valorBuff=" + valorBuff;
     }
 }
