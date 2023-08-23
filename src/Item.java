@@ -5,11 +5,11 @@ public abstract class Item {
     String nome;
     double chanceDeObter;
     double valorBuff;
-    private int chanceDeComum = 50;
-    private int chanceDeIncomum = 25;
-    private int chanceDeRaro = 15;
-    private int chanceDeEpico = 7;
-    private int chanceDeLendario = 3;
+    private static int chanceDeComum = 100;
+    private static int chanceDeIncomum = 50;
+    private static int chanceDeRaro = 25;
+    private static int chanceDeEpico = 10;
+    private static int chanceDeLendario = 3;
 
     public Item(String raridade, String nome,double chanceDeObter,double valorBuff) {
         this.raridade = raridade;
@@ -42,44 +42,46 @@ public abstract class Item {
         return nome;
     }
 
-    public int getChanceDeComum() {
+    public static int getChanceDeComum() {
         return chanceDeComum;
     }
 
-    public void setChanceDeComum(int chanceDeComum) {
-        this.chanceDeComum = chanceDeComum;
+    public static void setChanceDeComum(int chance) {
+        chanceDeComum = chance;
     }
 
-    public int getChanceDeIncomum() {
+    public static int getChanceDeIncomum() {
         return chanceDeIncomum;
     }
 
-    public void setChanceDeIncomum(int chanceDeIncomum) {
-        this.chanceDeIncomum = chanceDeIncomum;
+    public static void setChanceDeIncomum(int chance) {
+        chanceDeIncomum = chance;
     }
 
-    public int getChanceDeRaro() {
+    public static int getChanceDeRaro() {
         return chanceDeRaro;
     }
 
-    public void setChanceDeRaro(int chanceDeRaro) {
-        this.chanceDeRaro = chanceDeRaro;
+    public static void setChanceDeRaro(int chance) {
+        chanceDeRaro = chance;
     }
 
-    public int getChanceDeEpico() {
+    public static int getChanceDeEpico() {
         return chanceDeEpico;
     }
 
-    public void setChanceDeEpico(int chanceDeEpico) {
-        this.chanceDeEpico = chanceDeEpico;
+    public static void setChanceDeEpico(int chance) {
+        chanceDeEpico = chance;
     }
 
-    public int getChanceDeLendario() {
+    public static int getChanceDeLendario() {
         return chanceDeLendario;
     }
 
-    public void setChanceDeLendario(int chanceDeLendario) {
-        this.chanceDeLendario = chanceDeLendario;
+
+
+    public static void setChanceDeLendario(int chance) {
+        chanceDeLendario = chance;
     }
 
     @Override

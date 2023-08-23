@@ -408,12 +408,20 @@ public class Executavel {
             unidadesAdversarias.addAll(Nivel.nivel2());
         } else  if (contador == 3) {
             unidadesAdversarias.addAll(Nivel.nivel3());
+            Item.setChanceDeIncomum(75);
+            Item.setChanceDeRaro(50);
+            Item.setChanceDeEpico(25);
+            Item.setChanceDeLendario(10);
         }else  if (contador == 4) {
             unidadesAdversarias.addAll(Nivel.nivel4());
         }
         else if (contador == 5) {
             unidadesAdversarias.addAll(Nivel.nivel5());
             System.out.println(Historia.parte2());
+            Item.setChanceDeIncomum(100);
+            Item.setChanceDeRaro(75);
+            Item.setChanceDeEpico(50);
+            Item.setChanceDeLendario(25);
         } else if (contador == 10) {
             unidadesAdversarias.addAll(Nivel.nivel10());
             System.out.println(Historia.parte3());
@@ -465,7 +473,6 @@ public class Executavel {
         } while (unidadesAdversarias.size() != 0 || p1.getUnidades().size() != 0);
         System.out.println(p1.recompensa());
     }
-
     public static void ataqueAdversarioCampanha(Jogador p1) {
         if (unidadesAdversarias.size() != 0 && p1.getUnidades().size() != 0) {
             int numeroDeAdversariosVivos = unidadesAdversarias.size();
@@ -485,7 +492,6 @@ public class Executavel {
             }
         }
     }
-
     public static void menuInicialCampanha(Jogador jogador) {
         int opcao = 0;
         int contador = 0;
