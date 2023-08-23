@@ -6,11 +6,11 @@ public class Amuleto extends Item{
         super(raridade, nome,chanceDeObter,valorBuff);
     }
     public static void defineAmuletos(){
-        Amuleto amuletoDeBronze = new Amuleto("Comum","Amuleto de Bronze",50,25);
-        Amuleto amuletoDePrata = new Amuleto("Incomum","Amuleto de Prata",25,50);
-        Amuleto amuletoDeOuro = new Amuleto("Rara","Amuleto de Ouro",15,75);
-        Amuleto amuletoDosMonges = new Amuleto("Épico","Amuleto dos Monges",7,110);
-        Amuleto amuletoDivino = new Amuleto("Lendário","Amuleto Divino",3,200);
+        Amuleto amuletoDeBronze = new Amuleto("Comum","Amuleto de Bronze",getChanceDeComum(),25);
+        Amuleto amuletoDePrata = new Amuleto("Incomum","Amuleto de Prata",getChanceDeIncomum(),50);
+        Amuleto amuletoDeOuro = new Amuleto("Rara","Amuleto de Ouro",getChanceDeRaro(),75);
+        Amuleto amuletoDosMonges = new Amuleto("Épico","Amuleto dos Monges",getChanceDeEpico(),110);
+        Amuleto amuletoDivino = new Amuleto("Lendário","Amuleto Divino",getChanceDeLendario(),200);
         amuletos.add(amuletoDeBronze);
         amuletos.add(amuletoDePrata);
         amuletos.add(amuletoDeOuro);

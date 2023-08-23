@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 
 public class Runa extends Item{
-    static ArrayList<Item>runas = new ArrayList<>();
+    static ArrayList<Runa>runas = new ArrayList<>();
     public Runa(String raridade, String nome,double chanceDeObter,double valorBuff) {
         super(raridade, nome,chanceDeObter,valorBuff);
 
     }
 
         public static void defineRunas(){
-        Runa runaDaforca = new Runa("Comum","Runa da Força",50,20);
-        Runa runaPura = new Runa("incomum","Runa da Força",25,35);
-        Runa runaDoMinotauro = new Runa("Raro","Runa do Minotauro",15,60);
-        Runa runaDoRei = new Runa("Épico","Runa do Rei",7,75);
-        Runa runaDeAres = new Runa("Lendário","Runa de Ares",3,110);
+        Runa runaDaforca = new Runa("Comum","Runa da Força",getChanceDeComum(),20);
+        Runa runaPura = new Runa("incomum","Runa da Força",getChanceDeIncomum(),35);
+        Runa runaDoMinotauro = new Runa("Raro","Runa do Minotauro",getChanceDeRaro(),60);
+        Runa runaDoRei = new Runa("Épico","Runa do Rei",getChanceDeEpico(),75);
+        Runa runaDeAres = new Runa("Lendário","Runa de Ares",getChanceDeLendario(),110);
 
         runas.add(runaDaforca);
         runas.add(runaPura);
