@@ -7,8 +7,8 @@ public class Guerreiro extends Classe {
 
     public String especial(Classe unidadeEscolhida){
         this.setDano(this.getDano()+10);
-        this.setChaceCritico(this.getChaceCritico()+100);
-        return "Sua chance de ataque critico aumentou em 100% e seu dano foi aumentado para 20";
+        this.setChaceCritico(this.getChaceCritico()+50);
+        return "Sua chance de ataque critico aumentou em 50% e seu dano foi aumentado para "+getDano()*2;
     }
 
     @Override

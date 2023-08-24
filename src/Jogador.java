@@ -7,6 +7,7 @@ public class Jogador {
     int id;
     int especial;
     private ArrayList<Classe> unidades = new ArrayList<>();
+    private ArrayList<Classe> unidadeDeCombate = new ArrayList<>();
     private ArrayList<Item>inventario = new ArrayList<>();
 
     public Jogador(int id, String nome, int especial) {
@@ -47,6 +48,10 @@ public class Jogador {
         return inventario;
     }
 
+    public ArrayList<Classe> getUnidadeDeCombate() {
+        return unidadeDeCombate;
+    }
+
     public void setInventario(ArrayList<Item> inventario) {
         this.inventario = inventario;
     }
@@ -58,35 +63,35 @@ public class Jogador {
             for (Item item : Amuleto.amuletos) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);
-                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter";
+                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter " + recompensaEscolhida;
                 }
             }
         } else if (itemAleatorio == 1) {
             for (Item item : Armadura.armaduras) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);
-                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter";
+                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter " + recompensaEscolhida;
                 }
             }
         } else if (itemAleatorio == 2) {
             for (Item item : Bota.botas) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);
-                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter";
+                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter " + recompensaEscolhida;
                 }
             }
         }else if (itemAleatorio == 3) {
             for (Item item : Pergaminho.pergaminhos) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);
-                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter";
+                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter " + recompensaEscolhida;
                 }
             }
         }else{
             for (Item item : Runa.runas) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);
-                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter";
+                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter " + recompensaEscolhida;
                 }
             }
         }
@@ -94,7 +99,7 @@ public class Jogador {
     }
 
     public String escolhaDeRaridade(int numeroRandom){
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i <= 100; i++) {
               if (i<=Item.getChanceDeLendario()){
                 if (numeroRandom==i){
                     return "Lendário";
@@ -117,6 +122,30 @@ public class Jogador {
                 }
             }
         }
-        return "";
+        return "Comum";
+    }
+    public void resetaStatus() {
+        for (Classe unidade : this.getUnidades()) {
+            unidade.setDefesa(0);
+            unidade.setVida(100);
+            if (unidade instanceof Guerreiro) {
+                unidade.setDano(10);
+                unidade.setChanceEsquivar(2);
+                unidade.setChaceCritico(2);
+            } else if (unidade instanceof Ladino) {
+                unidade.setDano(30);
+                unidade.setChaceCritico(5);
+                unidade.setChanceEsquivar(5);
+            } else if (unidade instanceof Arqueiro) {
+                unidade.setDano(25);
+                unidade.setChanceEsquivar(5);
+                unidade.setChaceCritico(5);
+            } else {
+                unidade.setDano(20);
+                unidade.setChanceEsquivar(2);
+                unidade.setChaceCritico(10);
+            }
+            unidade.defineBuff();
+        }
     }
 }

@@ -1,6 +1,3 @@
-
-import javax.sound.midi.Soundbank;
-import java.awt.color.CMMException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -25,13 +22,13 @@ public class Executavel {
         for (Jogador jogadorE : jogadores) {
             if (jogadorE.getUnidades().size() == 0) {
                 for (int i = 0; i <= 2; ) {
-                    int opcao = 0;
+                    int opcao;
                     System.out.println(jogadorE.nome + """ 
                              Escolha um personagem para seu time:
                             [1]Arqueiro
                             [2]Guerreiro
                             [3]ladino
-                            [4]Mago """);
+                            [4]Mago""");
                     opcao = sc.nextInt();
                     int id = jogadorE.getUnidades().toArray().length;
                     switch (opcao) {
@@ -104,7 +101,7 @@ public class Executavel {
 
     public static void lutarMultiplayer() {
         int vez = 1;
-        int opcaoMenuLuta = 0;
+        int opcaoMenuLuta;
         Jogador p1 = null;
         Jogador p2 = null;
         Jogador jogadorAtual = null;
@@ -168,11 +165,10 @@ public class Executavel {
                 if (verificaVitoria() && opcaoMenuLuta != 3) {
                     if (jogadorAtual == p1) {
                         System.out.println(p2.nome + " Venceu o jogo");
-                        vez = 0;
                     } else {
                         System.out.println(p1.nome + " Venceu o jogo");
-                        vez = 0;
                     }
+                    vez = 0;
                     for (Jogador jogador : jogadores) {
                         jogador.getUnidades().removeIf(Objects::nonNull);
                     }
@@ -200,7 +196,7 @@ public class Executavel {
 
     public static boolean empate() {
         int empate = 0;
-        int resposta = 0;
+        int resposta;
         for (Jogador jogadorEmpate : jogadores) {
             System.out.println(jogadorEmpate.nome + " Aceita o empate?\n[1]Sim\n[2]Não");
             resposta = sc.nextInt();
@@ -222,7 +218,7 @@ public class Executavel {
     }
 
     public static void menu() {
-        int opcao = 0;
+        int opcao;
         do {
             System.out.println("""
                     [1]Definir Times
@@ -258,7 +254,7 @@ public class Executavel {
     }
 
     public static void atacar(Jogador jogadorAtual, ArrayList<Classe> unidadesAdversarias) {
-        int opcaoParaAtacarEscolhida = 0;
+        int opcaoParaAtacarEscolhida;
         Classe personagemMorto = null;
         System.out.println(jogadorAtual.nome + " " + """
                 Escolha um personagem para atacar o Adversario""");
@@ -302,7 +298,6 @@ public class Executavel {
     }
 
     public static void verificaMorte() {
-        int i = 0;
         for (Jogador jogadorE : jogadores) {
             for (Classe unidadeEncontrada : jogadorE.getUnidades()) {
                 if (unidadeEncontrada.getVida() <= 0) {
@@ -388,7 +383,7 @@ public class Executavel {
         String nome = sc.next();
         Jogador p1 = new Jogador(1, nome, 0);
         jogadores.add(p1);
-        Guerreiro guerreiro = new Guerreiro("Jay", 100, 10, 0, 2, 2, 20, 0, null);
+        Guerreiro guerreiro = new Guerreiro("Jay", 100, 200, 0, 2, 2, 20, 0, null);
         p1.getUnidades().add(guerreiro);
         Ladino ladino = new Ladino("Pedro", 100, 30, 0, 5, 5, 20, 1, null);
         p1.getUnidades().add(ladino);
@@ -405,7 +400,7 @@ public class Executavel {
 
         int numeroAleatorio = ra.nextInt(100);
         if (contador > 3 && numeroAleatorio < 20 && !campanha.isTrava()) {
-            salaDeTesouros(jogador);
+            System.out.println(salaDeTesouros(jogador));
         } else {
             contador++;
             if (contador == 1) {
@@ -440,16 +435,16 @@ public class Executavel {
     }
 
     public static void menuDeBatalhaCampanha(Jogador p1, ArrayList<Classe> unidadesAdversarias) {
+        p1.getUnidadeDeCombate().clear();
+        p1.getUnidadeDeCombate().addAll(p1.getUnidades());
         p1.setEspecial(0);
         String especialString = " [̷3̷]̷E̷s̷p̷e̷c̷i̷a̷l̷";
-        int opcao = 0;
-        int contador = 2;
+        int opcao;
         do {
             if (p1.getEspecial() >= 3) {
                 especialString = ("[3]Especial");
-                contador = 3;
             }
-            if (unidadesAdversarias.size() == 0 || p1.getUnidades().size() == 0) {
+            if (unidadesAdversarias.size() == 0 || p1.getUnidadeDeCombate().size() == 0) {
                 break;
             }
             System.out.println("""
@@ -468,7 +463,6 @@ public class Executavel {
                 case 3:
                     if (p1.getEspecial() >= 3) {
                         especial(p1, unidadesAdversarias);
-                        contador = 2;
                     } else {
                         System.out.println("Especial não carregado");
                     }
@@ -476,19 +470,19 @@ public class Executavel {
             }
             p1.setEspecial(p1.getEspecial() + 1);
             System.out.println(campanha.ataqueAdversarioCampanha(p1));
-        } while (unidadesAdversarias.size() != 0 || p1.getUnidades().size() != 0);
+            p1.getUnidadeDeCombate().removeIf(unidade -> unidade.getVida() == 0);
+            if (p1.getUnidadeDeCombate().size() == 0) {
+                p1.getUnidades().clear();
+            }
+        } while (unidadesAdversarias.size() != 0 || p1.getUnidadeDeCombate().size() != 0);
         System.out.println(p1.recompensa());
-        resetaStatus(p1);
     }
 
     public static void menuInicialCampanha(Jogador jogador) {
-        int opcao = 0;
+        int opcao;
         int contador = 0;
         do {
-            for (Classe unidade : jogador.getUnidades()) {
-                    unidade.setVida(100);
-                    unidade.defineBuff();
-            }
+            jogador.resetaStatus();
             System.out.println("""
                     [1]Ver personagens
                     [2]Ver Inventario
@@ -568,14 +562,14 @@ public class Executavel {
                 } else {
                     continuar = false;
                 }
-            }else {
+            } else {
                 unidadeEscolhida.setItem(item);
                 jogador.getInventario().remove(item);
             }
         } while (!continuar);
     }
 
-    public static void salaDeTesouros(Jogador jogador) {
+    public static String salaDeTesouros(Jogador jogador) {
 
         System.out.println("""
                 Protetor Do Tesouro: Deseja me desafiar?
@@ -583,27 +577,23 @@ public class Executavel {
                 Deseja desafiar o protetor?
                 [1]Sim
                 [2]Não""");
-        campanha.unidadesAdversarias.clear();
-        Protetor protetor = new Protetor("Protetor Do Tesouro", 500, 50, 0, 10, 10, 0, 0, null);
-        campanha.unidadesAdversarias.add(protetor);
-        if (protetor.getVida() == 0) {
-            jogador.recompensa();
-            jogador.recompensa();
-            jogador.recompensa();
-            jogador.recompensa();
-            jogador.recompensa();
-            campanha.setTrava(true);
-        }
-    }
-
-    public static void resetaStatus(Jogador jogador) {
-        for (Classe unidade : jogador.getUnidades()) {
-            if (unidade instanceof Guerreiro) {
-                unidade.setChaceCritico(2);
-                unidade.setDano(10);
-            } else if (unidade instanceof Ladino) {
-                unidade.setChanceEsquivar(5);
+        int opcao = sc.nextInt();
+        if (opcao == 2) {
+            return "Você correu do Protetor";
+        } else {
+            campanha.unidadesAdversarias.clear();
+            Protetor protetor = new Protetor("Protetor Do Tesouro", 500, 50, 0, 10, 10, 0, 0, null);
+            campanha.unidadesAdversarias.add(protetor);
+            if (protetor.getVida() <= 0) {
+                System.out.println("Os quatro amigos encontram muitos baús dentro da masmorra");
+                System.out.println(jogador.recompensa());
+                System.out.println(jogador.recompensa());
+                System.out.println(jogador.recompensa());
+                System.out.println(jogador.recompensa());
+                campanha.setTrava(true);
+                return "Parabens você derrotou o Protetor";
             }
         }
+        return "Você foi derrotado Miseravelmente";
     }
 }
