@@ -8,10 +8,10 @@ public class Pergaminho extends Item{
     }
 
     public static void definePergaminhos(){
-        Pergaminho pergaminhoVelho = new Pergaminho("Comum","Pergaminho Velho",getChanceDeComum(),5);
-        Pergaminho pergaminhoDaVerdade = new Pergaminho("Incomum","Pergaminho da Verdade",getChanceDeIncomum(),10);
-        Pergaminho pergaminhoDoEspirito = new Pergaminho("Raro","Pergaminho do Espirito",getChanceDeRaro(),20);
-        Pergaminho pergaminhoDoAnciao = new Pergaminho("Épico","Pergaminho do Ancião",getChanceDeEpico(),35);
+        Pergaminho pergaminhoVelho = new Pergaminho("Comum","Pergaminho Velho",getChanceDeComum()-getChanceDeIncomum(),5);
+        Pergaminho pergaminhoDaVerdade = new Pergaminho("Incomum","Pergaminho da Verdade",getChanceDeIncomum()-getChanceDeRaro(),10);
+        Pergaminho pergaminhoDoEspirito = new Pergaminho("Raro","Pergaminho do Espirito",getChanceDeRaro()-getChanceDeEpico(),20);
+        Pergaminho pergaminhoDoAnciao = new Pergaminho("Épico","Pergaminho do Ancião",getChanceDeEpico()-getChanceDeLendario(),35);
         Pergaminho pergaminhoDaFlorestaNegra = new Pergaminho("Lendário","Pergaminho da Floresta Negra",getChanceDeLendario(),50);
 
         pergaminhos.add(pergaminhoVelho);

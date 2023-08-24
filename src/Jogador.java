@@ -6,8 +6,8 @@ public class Jogador {
     String nome;
     int id;
     int especial;
-    public ArrayList<Classe> unidades = new ArrayList<>();
-    public ArrayList<Item>inventario = new ArrayList<>();
+    private ArrayList<Classe> unidades = new ArrayList<>();
+    private ArrayList<Item>inventario = new ArrayList<>();
 
     public Jogador(int id, String nome, int especial) {
         this.nome = nome;
@@ -43,35 +43,39 @@ public class Jogador {
         this.especial = especial;
     }
 
+    public ArrayList<Item> getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(ArrayList<Item> inventario) {
+        this.inventario = inventario;
+    }
+
     public String recompensa() {
         int itemAleatorio = ra.nextInt(5);
         int recompensaEscolhida = ra.nextInt(100);
-        System.out.println(itemAleatorio);
-        System.out.println(recompensaEscolhida);
-        if (itemAleatorio == 1) {
-            System.out.println(Amuleto.amuletos);
+        if (itemAleatorio == 0) {
             for (Item item : Amuleto.amuletos) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);
-                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + "que tinha " + item.getChanceDeObter() + "% chance de obter";
+                    return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter";
                 }
             }
-        } else if (itemAleatorio == 2) {
-            System.out.println(Armadura.armaduras);
+        } else if (itemAleatorio == 1) {
             for (Item item : Armadura.armaduras) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);
                     return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter";
                 }
             }
-        } else if (itemAleatorio == 3) {
+        } else if (itemAleatorio == 2) {
             for (Item item : Bota.botas) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);
                     return "Você Ganhou " + item.getNome() + "  " + item.getRaridade() + " que tinha " + item.getChanceDeObter() + "% chance de obter";
                 }
             }
-        }else if (itemAleatorio == 4) {
+        }else if (itemAleatorio == 3) {
             for (Item item : Pergaminho.pergaminhos) {
                 if (item.getRaridade().equals(escolhaDeRaridade(recompensaEscolhida))) {
                     this.inventario.add(item);

@@ -8,10 +8,10 @@ public class Runa extends Item{
     }
 
         public static void defineRunas(){
-        Runa runaDaforca = new Runa("Comum","Runa da Força",getChanceDeComum(),20);
-        Runa runaPura = new Runa("incomum","Runa da Força",getChanceDeIncomum(),35);
-        Runa runaDoMinotauro = new Runa("Raro","Runa do Minotauro",getChanceDeRaro(),60);
-        Runa runaDoRei = new Runa("Épico","Runa do Rei",getChanceDeEpico(),75);
+        Runa runaDaforca = new Runa("Comum","Runa da Força",getChanceDeComum()-getChanceDeIncomum(),20);
+        Runa runaPura = new Runa("incomum","Runa da Força",getChanceDeIncomum()-getChanceDeRaro(),35);
+        Runa runaDoMinotauro = new Runa("Raro","Runa do Minotauro",getChanceDeRaro()-getChanceDeEpico(),60);
+        Runa runaDoRei = new Runa("Épico","Runa do Rei",getChanceDeEpico()-getChanceDeLendario(),75);
         Runa runaDeAres = new Runa("Lendário","Runa de Ares",getChanceDeLendario(),110);
 
         runas.add(runaDaforca);

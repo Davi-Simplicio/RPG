@@ -7,10 +7,10 @@ public class Armadura extends Item{
     }
 
     public static void defineArmaduras(){
-        Armadura armaduraDeBronze = new Armadura("Comum","Armadura De Bronze",getChanceDeComum(),25);
-        Armadura armaduraDePrata = new Armadura("Incomum","Armadura De Prata",getChanceDeIncomum(),50);
-        Armadura armaduraDeOuro = new Armadura("Raro","Armadura De Ouro",getChanceDeRaro(),75);
-        Armadura armaduraDoProtetor = new Armadura("Épico","Armadura Do Protetor",getChanceDeEpico(),110);
+        Armadura armaduraDeBronze = new Armadura("Comum","Armadura De Bronze",getChanceDeComum()-getChanceDeIncomum(),25);
+        Armadura armaduraDePrata = new Armadura("Incomum","Armadura De Prata",getChanceDeIncomum()-getChanceDeRaro(),50);
+        Armadura armaduraDeOuro = new Armadura("Raro","Armadura De Ouro",getChanceDeRaro()-getChanceDeEpico(),75);
+        Armadura armaduraDoProtetor = new Armadura("Épico","Armadura Do Protetor",getChanceDeEpico()-getChanceDeLendario(),110);
         Armadura armaduraDosDeuses = new Armadura("Lendário","Armadura Dos Deuses",getChanceDeLendario(),200);
 
         armaduras.add(armaduraDeBronze);

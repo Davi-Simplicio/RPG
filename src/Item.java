@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public abstract class Item {
-    String raridade;
-    String nome;
-    double chanceDeObter;
-    double valorBuff;
+    private String raridade;
+    private String nome;
+    private double chanceDeObter;
+    private double valorBuff;
     private static int chanceDeComum = 100;
     private static int chanceDeIncomum = 50;
     private static int chanceDeRaro = 25;

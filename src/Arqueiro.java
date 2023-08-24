@@ -18,12 +18,15 @@ public class Arqueiro extends Classe{
             if (unidadeAdversariaEscolhida.getDefesa() <= 0) {
                 unidadeAdversariaEscolhida.setVida(unidadeAdversariaEscolhida.getVida() - this.getDano());
                 arrumarDefesa();
-                texto = this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
+                if (unidadeAdversariaEscolhida.getVida() < 0) {
+                    unidadeAdversariaEscolhida.setVida(0);
+                }
+                texto += this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
                         " que agora está com " + unidadeAdversariaEscolhida.getVida() + " de vida"+"\n";
             } else {
                 unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano());
                 arrumarDefesa();
-                texto = (this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
+                texto += (this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
                         " que agora está com " + unidadeAdversariaEscolhida.getDefesa() + " de defesa" + "\n");
             }
         }

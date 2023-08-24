@@ -100,15 +100,12 @@ public abstract class Classe {
                 if (unidadeAdversariaEscolhida.getVida() < 0) {
                     unidadeAdversariaEscolhida.setVida(0);
                 }
-                return falaExtra +" "+ this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
+                return falaExtra +" "+ this.getNome() + " infringiu " + this.getDano()* dobradorDeDano + " de dano em " + unidadeAdversariaEscolhida.getNome() +
                         " que agora está com " + unidadeAdversariaEscolhida.getVida() + " de vida";
             } else {
-                unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano());
+                unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano()* dobradorDeDano);
                 arrumarDefesa();
-                if (unidadeAdversariaEscolhida.getDefesa() < 0) {
-                    unidadeAdversariaEscolhida.setDefesa(0);
-                }
-                return (falaExtra +" "+ this.getNome() + " infringiu " + this.getDano() + " de dano em " + unidadeAdversariaEscolhida.getNome() +
+                return (falaExtra +" "+ this.getNome() + " infringiu " + this.getDano()* dobradorDeDano + " de dano em " + unidadeAdversariaEscolhida.getNome() +
                         " que agora está com " + unidadeAdversariaEscolhida.getDefesa() + " de defesa");
 
             }
@@ -134,7 +131,7 @@ public abstract class Classe {
     public String toString() {
         String nomeDoItem = "Nenhum";
         if (item!=null){
-             nomeDoItem = item.nome;
+             nomeDoItem = item.getNome();
         }
         return "[" + id + "]" +
                 "vida=" + vida +
@@ -149,7 +146,7 @@ public abstract class Classe {
 
     public void arrumarDefesa() {
         for (Jogador jogador : Executavel.jogadores) {
-            for (Classe unidade : jogador.unidades) {
+            for (Classe unidade : jogador.getUnidades()) {
                 if (unidade.getDefesa() < 0) {
                     unidade.setDefesa(0);
                 }
@@ -159,17 +156,18 @@ public abstract class Classe {
     }
     public void defineBuff(){
         Item item = this.getItem();
+
         if (item!=null){
             if (item instanceof Amuleto){
                 this.setVida((int) (this.getVida()+item.getValorBuff()));
             }else if(item instanceof Armadura){
                 this.setDefesa((int) (this.getDefesa()+item.getValorBuff()));
             }else if(item instanceof Bota){
-                this.setChanceEsquivar((int) (this.getChanceEsquivar()+item.valorBuff));
-            }else if(item instanceof Runa){
+                this.setChanceEsquivar((int) (this.getChanceEsquivar()+item.getValorBuff()));
+            }else if(item instanceof Pergaminho){
                 this.setChaceCritico((int) (this.getChaceCritico()+item.getValorBuff()));
             }else{
-                this.setDano((int) (this.getDano()+item.valorBuff));
+                this.setDano((int) (this.getDano()+item.getValorBuff()));
             }
         }
 

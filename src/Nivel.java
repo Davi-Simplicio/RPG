@@ -132,32 +132,32 @@ public class Nivel {
     }
     public static ArrayList<Classe> nivel8() {
         unidadesAdversarias.clear();
-        Orc orcDaFloresta = null;
         Esqueleto esqueletoDoPantano = null;
+        Orc orcDasMontanhas = null;
 
         for (int i = 0; i <= 3; i++) {
             if (i == 3 || i==2) {
+                orcDasMontanhas = new Orc("Orc das Montanhas", 150, 50, 0, 10, 0, 0, i, null);
+                unidadesAdversarias.add(orcDasMontanhas);
+            } else {
                 esqueletoDoPantano = new Esqueleto("Esqueleto Do Pântano", 100, 40, 0, 15, 15, 0, i, null);
                 unidadesAdversarias.add(esqueletoDoPantano);
-            } else {
-                orcDaFloresta = new Orc("Orc da Floresta", 100, 20, 0, 5, 5, 30, i, null);
-                unidadesAdversarias.add(orcDaFloresta);
             }
         }
         return unidadesAdversarias;
     }
     public static ArrayList<Classe> nivel9() {
         unidadesAdversarias.clear();
-        Orc orcDaFloresta = null;
-        Esqueleto esqueletoDoPantano = null;
+        Orc orcDasMontanhas = null;
+        Esqueleto esqueletoDoDeserto = null;
 
         for (int i = 0; i <= 3; i++) {
             if (i == 3 || i==2) {
-                esqueletoDoPantano = new Esqueleto("Esqueleto Do Pântano", 100, 40, 0, 15, 15, 0, i, null);
-                unidadesAdversarias.add(esqueletoDoPantano);
+                esqueletoDoDeserto = new Esqueleto("Esqueleto Do Deserto", 150, 30, 0, 20, 20, 0, i, null);
+                unidadesAdversarias.add(esqueletoDoDeserto);
             } else {
-                orcDaFloresta = new Orc("Orc da Floresta", 100, 20, 0, 5, 5, 30, i, null);
-                unidadesAdversarias.add(orcDaFloresta);
+                orcDasMontanhas = new Orc("Orc das Montanhas", 150, 50, 0, 10, 0, 0, i, null);
+                unidadesAdversarias.add(orcDasMontanhas);
             }
         }
         return unidadesAdversarias;
