@@ -508,6 +508,7 @@ public class Executavel {
                     break;
             }
         } while (opcao != 4 && jogador.getUnidades().size() != 0);
+        System.out.println("Você Perdeu");
     }
 
     private static void verInventario(Jogador jogador) {
