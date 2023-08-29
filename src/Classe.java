@@ -1,9 +1,7 @@
 import java.util.Random;
 
-import java.util.Random;
-
 public abstract class Classe {
-    Random sc = new Random();
+    Random sc= new Random();
     private String nome;
     private int vida;
     private int dano;
@@ -100,8 +98,8 @@ public abstract class Classe {
                 if (unidadeAdversariaEscolhida.getVida() < 0) {
                     unidadeAdversariaEscolhida.setVida(0);
                 }
-                return falaExtra + " " + this.getNome() + " infringiu " + this.getDano() * dobradorDeDano + " de dano em " + unidadeAdversariaEscolhida.getNome() +
-                        " que agora está com " + unidadeAdversariaEscolhida.getVida() + " de vida";
+                return (falaExtra + " " + this.getNome() + " infringiu " + this.getDano() * dobradorDeDano + " de dano em " + unidadeAdversariaEscolhida.getNome() +
+                        " que agora está com " + unidadeAdversariaEscolhida.getVida() + " de vida");
             } else {
                 unidadeAdversariaEscolhida.setDefesa(unidadeAdversariaEscolhida.getDefesa() - this.getDano() * dobradorDeDano);
                 arrumarDefesa();
@@ -127,20 +125,8 @@ public abstract class Classe {
         this.defesa = defesa;
     }
 
-    @Override
-    public String toString() {
-        String nomeDoItem = "Nenhum";
-        if (item != null) {
-            nomeDoItem = item.getNome();
-        }
-        return "[" + id + "]" +
-                "vida=" + vida +
-                ", dano=" + dano +
-                ", defesa=" + defesa +
-                ", chaceCritico=" + chaceCritico +
-                ", chanceEsquivar=" + chanceEsquivar +
-                ", Item= " + nomeDoItem +
-                '}';
+    public String  toStringCurto(){
+        return "["+id+"]"+nome;
     }
 
     public void arrumarDefesa() {
@@ -171,5 +157,20 @@ public abstract class Classe {
             }
         }
 
+    }
+    @Override
+    public String toString() {
+        String nomeDoItem = "Nenhum";
+        if (item != null) {
+            nomeDoItem = item.getNome();
+        }
+        return "[" + id + "]\n" +
+                "Vida: " + vida +"\n"+
+                "Dano: " + dano +"\n"+
+                "Defesa: " + defesa +"\n"+
+                "ChaceCritico: " + chaceCritico +"\n"+
+                "ChanceEsquivar: " + chanceEsquivar +"\n"+
+                "Item: " + nomeDoItem+"\n"+
+                "--------------------------------------------";
     }
 }

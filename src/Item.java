@@ -11,7 +11,7 @@ public abstract class Item {
     private static int chanceDeEpico = 10;
     private static int chanceDeLendario = 3;
 
-    public Item(String raridade, String nome,double chanceDeObter,double valorBuff) {
+    public Item(String raridade, String nome, double chanceDeObter, double valorBuff) {
         this.raridade = raridade;
         this.nome = nome;
         this.chanceDeObter = chanceDeObter;
@@ -78,8 +78,6 @@ public abstract class Item {
         return chanceDeLendario;
     }
 
-
-
     public static void setChanceDeLendario(int chance) {
         chanceDeLendario = chance;
     }
@@ -87,7 +85,7 @@ public abstract class Item {
     @Override
     public String toString() {
         return nome + '\'' +
-               raridade + '\'' +
+                raridade + '\'' +
                 " chanceDeObter=" + chanceDeObter +
                 " valorBuff=" + valorBuff;
     }

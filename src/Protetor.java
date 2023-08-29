@@ -12,4 +12,9 @@ public class Protetor extends Classe{
     public String defender() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Protetor{} " + super.toString();
+    }
 }
