@@ -13,72 +13,10 @@ public class Executavel {
         modoDeJogo();
     }
 
-    public static void defineTime() {
-        for (Jogador jogadorE : jogadores) {
-            if (jogadorE.getUnidades().size() == 0) {
-                for (int i = 0; i <= 2; ) {
-                    int opcao;
-                    System.out.println(jogadorE.nome + """ 
-                             Escolha um personagem para seu time:
-                            [1]Arqueiro
-                            [2]Guerreiro
-                            [3]ladino
-                            [4]Mago""");
-                    opcao = sc.nextInt();
-                    int id = jogadorE.getUnidades().toArray().length;
-                    switch (opcao) {
-                        case 1:
-                            Arqueiro arqueiro = new Arqueiro("Arqueiro", 100, 30, 25, 5, 10, 90, id, null);
-                            jogadorE.getUnidades().add(arqueiro);
-                            i++;
-                            break;
-                        case 2:
-                            Guerreiro guerreiro = new Guerreiro("Guerreiro", 100, 10, 50, 2, 1, 100, id, null);
-                            jogadorE.getUnidades().add(guerreiro);
-                            i++;
-                            break;
-                        case 3:
-                            Ladino ladino = new Ladino("Ladino", 100, 50, 0, 8, 10, 90, id, null);
-                            jogadorE.getUnidades().add(ladino);
-                            i++;
-                            break;
-                        case 4:
-                            Mago mago = new Mago("Mago", 100, 30, 25, 0, 20, 50, id, null);
-                            jogadorE.getUnidades().add(mago);
-                            i++;
-                            break;
-                    }
-                }
-            } else {
-                System.out.println("Os times já estão definidos");
-            }
-        }
-    }
-
-    public static void cadastraUsuario() {
-        int id;
-        do {
-            System.out.println("Cadastre um nome de Usuario");
-            String nome = sc.next();
-
-            if (jogadores.size() == 0) {
-                id = 1;
-                Jogador jogador = new Jogador(id, nome, 0);
-                jogadores.add(jogador);
-            } else {
-                id = 2;
-                Jogador jogador = new Jogador(id, nome, 0);
-                jogadores.add(jogador);
-            }
-        } while (id != 2);
-        menu();
-    }
 
     public static void modoDeJogo() {
         int opcao;
         do {
-
-
             System.out.println("Você deseja jogar Campanha ou Multiplayer?\n[1]Campanha\n[2]Multiplayer\n[3]Sair");
             opcao = sc.nextInt();
             switch (opcao) {
@@ -86,12 +24,92 @@ public class Executavel {
                     campanha();
                     break;
                 case 2:
-                    cadastraUsuario();
+                    menuMultiplayer();
+                    break;
+                case 3:
+                    System.exit(0);
+            }
+        } while (opcao != 3);
+    }
+
+    public static void menuMultiplayer() {
+        do {
+            cadastraUsuario();
+            defineTime();
+        } while (jogadores.size() != 2);
+
+        int opcao;
+        do {
+            System.out.println("""
+                    [1]Mostrar Times
+                    [2]Lutar
+                    [3]Sair""");
+            opcao = sc.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    mostrarTime();
+                    break;
+                case 2:
+                    lutarMultiplayer();
                     break;
                 case 3:
                     break;
             }
         } while (opcao != 3);
+
+    }
+
+    public static void cadastraUsuario() {
+        System.out.println("Cadastre um nome de Usuario");
+        String nome = sc.next();
+        Jogador jogador = new Jogador(jogadores.size() + 1, nome, 0);
+        jogadores.add(jogador);
+    }
+
+    public static void defineTime(Jogador jogadorE) {
+        for (int i = 0; i <= 2; ) {
+            int opcao;
+            System.out.println(jogadorE.nome + """ 
+                     Escolha um personagem para seu time:
+                    [1]Arqueiro
+                    [2]Guerreiro
+                    [3]Ladino
+                    [4]Mago""");
+            opcao = sc.nextInt();
+            int id = jogadorE.getUnidades().size();
+            switch (opcao) {
+                case 1:
+                    Arqueiro arqueiro = new Arqueiro(id);
+                    jogadorE.getUnidades().add(arqueiro);
+                    i++;
+                    break;
+                case 2:
+                    Guerreiro guerreiro = new Guerreiro(id);
+                    jogadorE.getUnidades().add(guerreiro);
+                    i++;
+                    break;
+                case 3:
+                    Ladino ladino = new Ladino(id);
+                    jogadorE.getUnidades().add(ladino);
+                    i++;
+                    break;
+                case 4:
+                    Mago mago = new Mago(id);
+                    jogadorE.getUnidades().add(mago);
+                    i++;
+                    break;
+            }
+        }
+    }
+
+    public static void mostrarTime() {
+        for (Jogador jogadorE : jogadores) {
+            System.out.println("Time de " + jogadorE.nome + "\n");
+            for (Classe unidade : jogadorE.getUnidades()) {
+                System.out.println(unidade + "\n");
+            }
+        }
     }
 
     public static void lutarMultiplayer() {
@@ -212,41 +230,6 @@ public class Executavel {
         }
     }
 
-    public static void menu() {
-        int opcao;
-        do {
-            System.out.println("""
-                    [1]Definir Times
-                    [2]Mostrar Times
-                    [3]Lutar
-                    [4]Sair""");
-            opcao = sc.nextInt();
-
-            switch (opcao) {
-                case 1:
-                    defineTime();
-                    break;
-                case 2:
-                    mostrarTime();
-                    break;
-                case 3:
-                    lutarMultiplayer();
-                    break;
-                case 4:
-                    break;
-            }
-        } while (opcao != 4);
-
-    }
-
-    public static void mostrarTime() {
-        for (Jogador jogadorE : jogadores) {
-            System.out.println("Time de " + jogadorE.nome + "\n");
-            for (Classe unidade : jogadorE.getUnidades()) {
-                System.out.println(unidade + "\n");
-            }
-        }
-    }
 
     public static boolean atacar(Jogador jogadorAtual, ArrayList<Classe> unidadesAdversarias) {
         int opcaoParaAtacarEscolhida;
@@ -382,17 +365,15 @@ public class Executavel {
 
     public static void campanha() {
         campanha.defineItens();
-        System.out.println("defina seu nome");
-        String nome = sc.next();
-        Jogador p1 = new Jogador(1, nome, 0);
-        jogadores.add(p1);
-        Guerreiro guerreiro = new Guerreiro("Jay", 100, 200, 0, 2, 2, 20, 0, null);
+        cadastraUsuario();
+        defineTime();
+        Guerreiro guerreiro = new Guerreiro();
         p1.getUnidades().add(guerreiro);
-        Ladino ladino = new Ladino("Pedro", 100, 30, 0, 5, 5, 20, 1, null);
+        Ladino ladino = new Ladino();
         p1.getUnidades().add(ladino);
-        Arqueiro arqueiro = new Arqueiro("Cleo", 100, 25, 0, 5, 5, 30, 2, null);
+        Arqueiro arqueiro = new Arqueiro();
         p1.getUnidades().add(arqueiro);
-        Mago mago = new Mago("Isa", 100, 20, 0, 10, 2, 25, 3, null);
+        Mago mago = new Mago();
         p1.getUnidades().add(mago);
         menuInicialCampanha(p1);
 
@@ -402,7 +383,7 @@ public class Executavel {
         unidadesAdversarias.clear();
 
         int numeroAleatorio = ra.nextInt(100);
-        if (contador > 3 && numeroAleatorio<=20 && !campanha.isTrava()) {
+        if (contador > 3 && numeroAleatorio <= 20 && !campanha.isTrava()) {
             salaDeTesouros();
         } else {
             contador++;
@@ -435,6 +416,39 @@ public class Executavel {
             }
         }
         menuDeBatalhaCampanha(jogador, campanha.unidadesAdversarias);
+    }
+
+
+    public static void menuInicialCampanha(Jogador jogador) {
+        int opcao;
+        int contador = 0;
+        do {
+            jogador.resetaStatus();
+            System.out.println("""
+                    [1]Ver personagens
+                    [2]Ver Inventario
+                    [3]Continuar Historia
+                    [4]Sair""");
+            opcao = sc.nextInt();
+            switch (opcao) {
+                case 1:
+                    mostrarTimeCurto(jogador);
+                    break;
+                case 2:
+                    if (jogador.getInventario().size() == 0) {
+                        System.out.println("Você não possui itens");
+                    } else {
+                        verInventario(jogador);
+                    }
+                    break;
+                case 3:
+                    defineNivel(jogador, contador, campanha.unidadesAdversarias);
+                    break;
+                case 4:
+                    break;
+            }
+        } while (opcao != 4 && jogador.getUnidades().size() != 0);
+        System.out.println("Você Perdeu");
     }
 
     public static void menuDeBatalhaCampanha(Jogador p1, ArrayList<Classe> unidadesAdversarias) {
@@ -498,38 +512,6 @@ public class Executavel {
         } else {
             System.out.println(p1.recompensa());
         }
-    }
-
-    public static void menuInicialCampanha(Jogador jogador) {
-        int opcao;
-        int contador = 0;
-        do {
-            jogador.resetaStatus();
-            System.out.println("""
-                    [1]Ver personagens
-                    [2]Ver Inventario
-                    [3]Continuar Historia
-                    [4]Sair""");
-            opcao = sc.nextInt();
-            switch (opcao) {
-                case 1:
-                    mostrarTimeCurto(jogador);
-                    break;
-                case 2:
-                    if (jogador.getInventario().size() == 0) {
-                        System.out.println("Você não possui itens");
-                    } else {
-                        verInventario(jogador);
-                    }
-                    break;
-                case 3:
-                    defineNivel(jogador, contador, campanha.unidadesAdversarias);
-                    break;
-                case 4:
-                    break;
-            }
-        } while (opcao != 4 && jogador.getUnidades().size() != 0);
-        System.out.println("Você Perdeu");
     }
 
     private static void mostrarTimeCurto(Jogador jogador) {

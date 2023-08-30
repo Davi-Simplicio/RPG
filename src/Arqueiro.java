@@ -4,10 +4,12 @@ import java.util.Random;
 public class Arqueiro extends Classe{
     Random sc = new Random();
 
-    public Arqueiro(String nome,int vida,int dano, int defesa, int chaceCritico,
-                    int chanceEsquivar, int especial, int id,Item item) {
-        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id,item);
-
+    public Arqueiro(int id) {
+        super("Arqueiro", 100, 30, 25, 5, 10, 90, id);
+    }
+    public Arqueiro(){
+        this(2);
+        this.setDefesa(0);
     }
 
 

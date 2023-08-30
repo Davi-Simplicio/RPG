@@ -1,7 +1,10 @@
 public class Mago extends Classe{
-    public Mago(String nome,int vida,int dano, int defesa, int chaceCritico,
-                int chanceEsquivar, int especial, int id,Item item) {
-        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id,item);
+    public Mago(int id) {
+        super("Mago", 100, 30, 25, 0, 20, 50, id);
+    }
+    public Mago(){
+        this(3);
+        this.setDefesa(0);
     }
 
     

@@ -1,7 +1,10 @@
 public class Ladino extends Classe{
-    public Ladino(String nome,int vida,int dano, int defesa, int chaceCritico,
-                  int chanceEsquivar, int especial, int id,Item item) {
-        super(nome,vida,dano, defesa, chaceCritico, chanceEsquivar, especial, id,item);
+    public Ladino(int id) {
+        super("Ladino", 100, 50, 0, 8, 10, 90, id);
+    }
+    public Ladino(){
+        this(1);
+        this.setDefesa(0);
     }
 
 

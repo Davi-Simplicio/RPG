@@ -13,7 +13,7 @@ public abstract class Classe {
     private Item item;
 
     public Classe(String nome, int vida, int dano, int defesa, int chaceCritico,
-                  int chanceEsquivar, int especial, int id, Item item) {
+                  int chanceEsquivar, int especial, int id) {
         this.nome = nome;
         this.vida = vida;
         this.dano = dano;
@@ -22,7 +22,6 @@ public abstract class Classe {
         this.chanceEsquivar = chanceEsquivar;
         this.especial = especial;
         this.id = id;
-        this.item = item;
 
     }
 
@@ -33,6 +32,10 @@ public abstract class Classe {
     public int getDano() {
         return dano;
     }
+    public void setDano(int dano) {
+        this.dano = dano;
+    }
+
 
     public int getDefesa() {
         return defesa;
@@ -62,9 +65,6 @@ public abstract class Classe {
         this.chanceEsquivar = chanceEsquivar;
     }
 
-    public void setDano(int dano) {
-        this.dano = dano;
-    }
 
     public String getNome() {
         return nome;
