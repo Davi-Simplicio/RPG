@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Campanha {
+public class Campanha extends ModoDeJogo{
     static Scanner sc = new Scanner(System.in);
     static Random ra = new Random();
     public ArrayList<Classe> unidadesAdversarias = new ArrayList<>();
@@ -12,7 +12,7 @@ public class Campanha {
         this.trava = trava;
     }
 
-    public String ataqueAdversarioCampanha(Jogador p1) {
+    public String ataqueAdversarioCampanha(Usuario p1) {
         if (this.unidadesAdversarias.size() != 0 && p1.getUnidadeDeCombate().size() != 0) {
             int numeroDeAdversariosVivos = this.unidadesAdversarias.size();
             int numeroDePersonagensVivos = p1.getUnidadeDeCombate().size();
@@ -113,5 +113,55 @@ public class Campanha {
         Runa.runas.add(runaDoMinotauro);
         Runa.runas.add(runaDoRei);
         Runa.runas.add(runaDeAres);
+    }
+
+    @Override
+    public ArrayList<Classe> definirUnidades(Usuario jogador) {
+        Guerreiro guerreiro = new Guerreiro();
+        jogador.getUnidades().add(guerreiro);
+        Ladino ladino = new Ladino();
+        jogador.getUnidades().add(ladino);
+        Arqueiro arqueiro = new Arqueiro();
+        jogador.getUnidades().add(arqueiro);
+        Mago mago = new Mago();
+        jogador.getUnidades().add(mago);
+    }
+
+    @Override
+    public void menu() {
+        int opcao;
+        int contador = 0;
+        do {
+            jogadorAtual.resetaStatus();
+            System.out.println("""
+                    [1]Ver personagens
+                    [2]Ver Inventario
+                    [3]Continuar Historia
+                    [4]Sair""");
+            opcao = sc.nextInt();
+            switch (opcao) {
+                case 1:
+                    mostrarTimeCurto(jogadorAtual);
+                    break;
+                case 2:
+                    if (jogadorAtual.getInventario().size() == 0) {
+                        System.out.println("Você não possui itens");
+                    } else {
+                        verInventario(jogadorAtual);
+                    }
+                    break;
+                case 3:
+                    defineNivel(jogadorAtual, contador, campanha.unidadesAdversarias);
+                    break;
+                case 4:
+                    break;
+            }
+        } while (opcao != 4 && jogadorAtual.getUnidades().size() != 0);
+        System.out.println("Você Perdeu");
+    }
+    @Override
+    public void cadastraJogador(){
+        super.cadastraJogador();
+        jogadores.add(new Computador());
     }
 }

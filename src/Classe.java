@@ -130,7 +130,7 @@ public abstract class Classe {
     }
 
     public void arrumarDefesa() {
-        for (Jogador jogador : Executavel.jogadores) {
+        for (Usuario jogador : Executavel.jogadores) {
             for (Classe unidade : jogador.getUnidades()) {
                 if (unidade.getDefesa() < 0) {
                     unidade.setDefesa(0);
