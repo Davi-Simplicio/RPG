@@ -12,7 +12,9 @@ public class Executavel {
 
     public static void main(String[] args) {
         jogo = modoDeJogo();
-        jogo.cadastraUsuario();
+        jogo.cadastraJogador();
+        int opcao = jogo.menu();
+        jogo.executarAcao(opcao);
     }
 
 
@@ -30,106 +32,6 @@ public class Executavel {
                     System.exit(0);
             }
         } while (true);
-    }
-
-    public static void mostrarTime() {
-        for (Usuario jogadorE : jogadores) {
-            System.out.println("Time de " + jogadorE.nome + "\n");
-            for (Classe unidade : jogadorE.getUnidades()) {
-                System.out.println(unidade + "\n");
-            }
-        }
-    }
-
-    public static void lutarMultiplayer() {
-        int vez = 1;
-        int opcaoMenuLuta;
-        Usuario p1 = null;
-        Usuario p2 = null;
-        Usuario jogadorAtual = null;
-        Usuario jogadorAdversario = null;
-        do {
-
-            for (Usuario jogadorE : jogadores) {
-                if (jogadorE.id == 1) {
-                    p1 = jogadorE;
-                } else {
-                    p2 = jogadorE;
-                }
-            }
-            if (p1.getUnidades().size() != 0 || p2.getUnidades().size() != 0) {
-                if (vez == 1) {
-                    jogadorAtual = p1;
-                    jogadorAdversario = p2;
-                } else if (vez == 2) {
-                    jogadorAtual = p2;
-                    jogadorAdversario = p1;
-                }
-                System.out.println("""
-                        Vez de\040""" + jogadorAtual.nome + "\n" + """
-                        Oque você deseja fazer?
-                        [1]Atacar
-                        [2]Defender
-                        [3]Especial(Apenas depois de 3 rodadas)
-                        [4]Propor Empate
-                        [5]Desistir""");
-                opcaoMenuLuta = sc.nextInt();
-                if (opcaoMenuLuta == 3) {
-                    if (jogadorAtual.getEspecial() >= 3) {
-                        jogadorAtual.setEspecial(0);
-                    } else {
-                        System.out.println("Especial não carregado");
-                        opcaoMenuLuta = 6;
-                    }
-                }
-                switch (opcaoMenuLuta) {
-                    case 1:
-                        atacar(jogadorAtual, jogadorAdversario.getUnidades());
-                        break;
-                    case 2:
-                        defender(jogadorAtual);
-                        break;
-                    case 3:
-                        especial(jogadorAtual, jogadorAdversario.getUnidades());
-                        break;
-
-                    case 4:
-                        if (empate()) {
-                            vez = 0;
-                        }
-
-                        break;
-                    case 5:
-                        desistir(jogadorAtual);
-                        break;
-
-                }
-                if (verificaVitoria() && opcaoMenuLuta != 3) {
-                    if (jogadorAtual == p1) {
-                        System.out.println(p2.nome + " Venceu o jogo");
-                    } else {
-                        System.out.println(p1.nome + " Venceu o jogo");
-                    }
-                    vez = 0;
-                    for (Usuario jogador : jogadores) {
-                        jogador.getUnidades().removeIf(Objects::nonNull);
-                    }
-                }
-                if (vez == 1) {
-                    vez = 2;
-                    p1.setEspecial(p1.getEspecial() + 1);
-                } else if (vez == 2) {
-                    vez = 1;
-                    p2.setEspecial(p2.getEspecial() + 1);
-                }
-            } else {
-                System.out.println("Defina um time antes de lutar");
-                vez = 0;
-            }
-
-
-        } while (vez != 0);
-
     }
 
     public static void desistir(Usuario jogadorE) {

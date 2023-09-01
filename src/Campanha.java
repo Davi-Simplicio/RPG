@@ -12,6 +12,11 @@ public class Campanha extends ModoDeJogo{
         this.trava = trava;
     }
 
+    @Override
+    public void cadastraJogador(){
+        super.cadastraJogador();
+        jogadores.add(new Computador());
+    }
     public String ataqueAdversarioCampanha(Usuario p1) {
         if (this.unidadesAdversarias.size() != 0 && p1.getUnidadeDeCombate().size() != 0) {
             int numeroDeAdversariosVivos = this.unidadesAdversarias.size();
@@ -128,7 +133,7 @@ public class Campanha extends ModoDeJogo{
     }
 
     @Override
-    public void menu() {
+    public int menu() {
         int opcao;
         int contador = 0;
         do {
@@ -138,30 +143,26 @@ public class Campanha extends ModoDeJogo{
                     [2]Ver Inventario
                     [3]Continuar Historia
                     [4]Sair""");
-            opcao = sc.nextInt();
-            switch (opcao) {
-                case 1:
-                    mostrarTimeCurto(jogadorAtual);
-                    break;
-                case 2:
-                    if (jogadorAtual.getInventario().size() == 0) {
-                        System.out.println("Você não possui itens");
-                    } else {
-                        verInventario(jogadorAtual);
-                    }
-                    break;
-                case 3:
-                    defineNivel(jogadorAtual, contador, campanha.unidadesAdversarias);
-                    break;
-                case 4:
-                    break;
-            }
-        } while (opcao != 4 && jogadorAtual.getUnidades().size() != 0);
-        System.out.println("Você Perdeu");
+             opcao = sc.nextInt();
+
+        } while (opcao < 1 || opcao > 4 );
+        return opcao;
     }
+
     @Override
-    public void cadastraJogador(){
-        super.cadastraJogador();
-        jogadores.add(new Computador());
+    public void executarAcao(int opcao) {
+        switch (opcao){
+            case 1:
+                mostrarTime();
+                break;
+            case 2:
+                verInventario();
+                break;
+            case 3:
+                lutar();
+                break;
+            case 4:
+                break;
+        }
     }
 }

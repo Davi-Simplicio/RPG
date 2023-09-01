@@ -3,37 +3,23 @@ import java.util.Random;
 
 public class Usuario extends Jogador {
     static Random ra = new Random();
-    String nome;
-    int id;
+
     int especial;
-    private ArrayList<Classe> unidades = new ArrayList<>();
+
     private ArrayList<Classe> unidadeDeCombate = new ArrayList<>();
     private ArrayList<Item>inventario = new ArrayList<>();
 
-    public Usuario(int id, String nome, int especial) {
+    public Usuario(String nome, int especial) {
         this.nome = nome;
-        this.id = id;
         this.especial = especial;
+    }
 
-    }
-    public ArrayList<Classe> getUnidades() {
-        return unidades;
-    }
 
     @Override
     public String toString() {
         return "Jogador{" +
                 "nome='" + nome + '\'' +
-                ", id=" + id +
                 '}';
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getEspecial() {

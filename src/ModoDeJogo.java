@@ -3,15 +3,30 @@ import java.util.Scanner;
 
 public abstract class ModoDeJogo {
     static Scanner sc = new Scanner(System.in);
-    static Usuario jogadorAtual;
-    public static ArrayList<Jogador> jogadores = new ArrayList<>();
+    int rodada=0;
+    public ArrayList<Jogador> jogadores = new ArrayList<>();
     public abstract ArrayList<Classe>definirUnidades(Usuario jogador);
 
-    public abstract void menu();
+    public abstract int menu();
     public void cadastraJogador() {
         System.out.println("Cadastre um nome de Usuario");
         String nome = sc.next();
-        Jogador jogador = new Usuario(jogadores.size() + 1, nome, 0);
+        Jogador jogador = new Usuario( nome, 0);
         jogadores.add(jogador);
+    }
+    public abstract void executarAcao(int opcao);
+    public void mostrarTime() {
+        for (Jogador jogadorE : jogadores) {
+            System.out.println("Time de " + jogadorE.nome + "\n");
+            for (Classe unidade : jogadorE.getUnidades()) {
+                System.out.println(unidade + "\n");
+            }
+        }
+    }
+    public Jogador getJogadorAtual(){
+        return jogadores.get(rodada%2);
+    }
+    public Jogador getJogadorAdversario(){
+        return jogadores.get((rodada+1)%2);
     }
 }
